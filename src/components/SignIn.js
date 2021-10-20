@@ -29,7 +29,8 @@ const SignIn = () => {
             </RegistrationForm>
             <Link to = {"/sign-in"}> 
                 <PageTransitionMessage>
-                    Already have an account? Enter now!
+                    First time on MyWallet? Sign-up now!
+
                 </PageTransitionMessage>
             </Link>
         </RegistrationContainer>

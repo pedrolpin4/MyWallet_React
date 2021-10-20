@@ -70,7 +70,7 @@ const ErrorMessage = styled.p`
     font-size: 15px;
     line-height: 18px;
     margin-bottom: 13px;
-    color: #580818;
+    color: crimson;
     font-weight: 700;
 
 `

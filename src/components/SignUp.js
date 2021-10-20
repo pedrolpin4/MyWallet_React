@@ -16,11 +16,11 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setrepeatPassword] = useState("");
-    const [message, setMessage] = useState("")
-
+    const [message, setMessage] = useState("");
+    
     const signUpValidator = Joi.object({
         name: Joi.string().min(3).max(20).required(),
-        email: Joi.string().email().required(),
+        email: Joi.string().email({ tlds: {allow: false} }).required(),
         password: Joi.string().min(6).max(12).required(),
         repeatPassword: Joi.string().required()
     })
@@ -32,20 +32,26 @@ const SignUp = () => {
         repeatPassword
     };
 
-    const signUpFunction = () => {
-        if(!signUpValidator.validate(forms).error && repeatPassword === password){
-            console.log("sou bobão");
+    const signUpFunction = e => {
+        e.preventDefault();
+        console.log("entrou");
+
+        if(signUpValidator.validate(forms).error){
+            setMessage(signUpValidator.validate(forms).error.details[0].message);
+            return;
+        }
+
+        if(repeatPassword !== password){
+            setMessage("Your password and its confirmation are not the same");
             return;
         }
         
-        setMessage(signUpValidator.validate(forms).error.details[0].message)
-        return;
     }
     
     return(
         <RegistrationContainer>
             <Logo>MyWallet</Logo>
-            <RegistrationForm onSubmit = {() => signUpFunction()}>
+            <RegistrationForm onSubmit = {signUpFunction}>
                 <input placeholder = "Name" value = {name} 
                     onChange = {e => setName(e.target.value)}/>
                 <input placeholder = "Email"  value = {email} 
@@ -61,7 +67,7 @@ const SignUp = () => {
             </ErrorMessage>
             <Link to = {"/"}> 
                 <PageTransitionMessage>
-                    First time on MyWallet? Sign-in now!
+                    Already have an account? Enter now!                   
                 </PageTransitionMessage>
             </Link>
         </RegistrationContainer>
