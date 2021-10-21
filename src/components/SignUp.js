@@ -4,6 +4,8 @@ import UserRegistration from "../sharedStyles/UserRegistration";
 import service from "../service/serviceFunctions";
 import validations from "../validation/JoiValidations";
 
+// habilitar spinner
+
 const SignUp = () => {
     const history = useHistory();
 
@@ -20,7 +22,7 @@ const SignUp = () => {
     const [password, setPassword] = useState("");
     const [repeatPassword, setrepeatPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [enabled, setEnabled] = useState("");
+    const [disabled, setDisabled] = useState("");
     
     const signUpValidator = validations.signUp;
 
@@ -33,6 +35,7 @@ const SignUp = () => {
 
     const signUpFunction = async e => {
         e.preventDefault();
+        setDisabled(true);
 
         if(signUpValidator.validate(forms).error){
             setErrorMessage(signUpValidator.validate(forms).error.details[0].message);
@@ -45,6 +48,7 @@ const SignUp = () => {
         }
 
         const result = await service.postSignUp(forms);
+        setDisabled(false);
         
         if(result.success){
             history.push("/")
@@ -66,7 +70,7 @@ const SignUp = () => {
                     onChange = {e => setPassword(e.target.value)}/>
                 <input placeholder = "Confirm your password" value = {repeatPassword} 
                     onChange = {e => setrepeatPassword(e.target.value)} />
-                <button>Enter</button>
+                <button disabled = {disabled}>{disabled ? "Enter" : "spinner" }</button>
             </RegistrationForm>
             <ErrorMessage>
                 {errorMessage}

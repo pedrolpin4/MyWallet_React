@@ -17,6 +17,7 @@ const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [disabled, setDisabled] = useState("");
 
     const signInValidator = validations.signIn
 
@@ -27,6 +28,7 @@ const SignIn = () => {
 
     const signInFunction = async (e) => {
         e.preventDefault();
+        setDisabled(true);
 
         if(signInValidator.validate(forms).error){
             setErrorMessage(signInValidator.validate(forms).error.details[0].message);
@@ -34,7 +36,8 @@ const SignIn = () => {
         }
 
         const result = await service.postSignIn(forms)
-    
+        setDisabled(false);
+
         if(result.success){
             history.push("/cash-flow");
             //save user info
@@ -52,7 +55,7 @@ const SignIn = () => {
                     onChange = {e => setEmail(e.target.value)}/>
                 <input placeholder = "Password" value = {password} 
                     onChange = {e => setPassword(e.target.value)}/>
-                <button>Enter</button>
+                <button disabled = {disabled}>Enter</button>
             </RegistrationForm>
             <ErrorMessage>
                 {errorMessage}
