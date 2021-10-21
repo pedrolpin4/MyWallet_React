@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import Joi from "joi";
-import UserRegistration from "../sharedStyles/UserRegistration"
+import { Link, useHistory } from "react-router-dom";
+import UserRegistration from "../sharedStyles/UserRegistration";
+import service from "../service/serviceFunctions";
+import validations from "../validation/JoiValidations";
 
 const SignUp = () => {
+    const history = useHistory();
+
     const {
         RegistrationContainer,
         Logo,
@@ -16,14 +19,10 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setrepeatPassword] = useState("");
-    const [message, setMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [enabled, setEnabled] = useState("");
     
-    const signUpValidator = Joi.object({
-        name: Joi.string().min(3).max(20).required(),
-        email: Joi.string().email({ tlds: {allow: false} }).required(),
-        password: Joi.string().min(6).max(12).required(),
-        repeatPassword: Joi.string().required()
-    })
+    const signUpValidator = validations.signUp;
 
     const forms = {
         name,
@@ -32,20 +31,27 @@ const SignUp = () => {
         repeatPassword
     };
 
-    const signUpFunction = e => {
+    const signUpFunction = async e => {
         e.preventDefault();
-        console.log("entrou");
 
         if(signUpValidator.validate(forms).error){
-            setMessage(signUpValidator.validate(forms).error.details[0].message);
+            setErrorMessage(signUpValidator.validate(forms).error.details[0].message);
             return;
         }
 
         if(repeatPassword !== password){
-            setMessage("Your password and its confirmation are not the same");
+            setErrorMessage("Your password and its confirmation are not the same");
             return;
         }
+
+        const result = await service.postSignUp(forms);
         
+        if(result.success){
+            history.push("/")
+            return;
+        }
+
+        setErrorMessage(result.message)
     }
     
     return(
@@ -63,7 +69,7 @@ const SignUp = () => {
                 <button>Enter</button>
             </RegistrationForm>
             <ErrorMessage>
-                {message}
+                {errorMessage}
             </ErrorMessage>
             <Link to = {"/"}> 
                 <PageTransitionMessage>

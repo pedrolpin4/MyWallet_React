@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import service from "../service/serviceFunctions";
 import UserRegistration from "../sharedStyles/UserRegistration";
-import Joi from "joi";
+import validations from "../validation/JoiValidations";
 
 const SignIn = () => {
+    const history = useHistory();
     const {
         RegistrationContainer,
         Logo,
@@ -14,27 +16,32 @@ const SignIn = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [message, setMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
-    const signInValidator = Joi.object({
-        email: Joi.string().email({ tlds: {allow: false} }).required(),
-        password: Joi.string().min(6).max(12).required(),
-    })
+    const signInValidator = validations.signIn
 
     const forms = {
         email,
         password
     };
 
-
-    const signInFunction = (e) => {
+    const signInFunction = async (e) => {
         e.preventDefault();
 
         if(signInValidator.validate(forms).error){
-            setMessage(signInValidator.validate(forms).error.details[0].message);
+            setErrorMessage(signInValidator.validate(forms).error.details[0].message);
             return;
         }
+
+        const result = await service.postSignIn(forms)
     
+        if(result.success){
+            history.push("/cash-flow");
+            //save user info
+            return;
+        }
+
+        setErrorMessage(result.message)
     }
     
     return(
@@ -48,7 +55,7 @@ const SignIn = () => {
                 <button>Enter</button>
             </RegistrationForm>
             <ErrorMessage>
-                {message}
+                {errorMessage}
             </ErrorMessage>
             <Link to = {"/sign-up"}> 
                 <PageTransitionMessage>
