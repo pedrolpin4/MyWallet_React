@@ -6,7 +6,6 @@ import UserRegistration from "../sharedStyles/UserRegistration";
 import validations from "../validation/JoiValidations";
 
 //turn on spinner
-//disabled no input
 
 const SignIn = () => {
     const {
@@ -21,7 +20,7 @@ const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [disabled, setDisabled] = useState("");
+    const [disabled, setDisabled] = useState(false);
     const {userData, setUserData} = useContext(UserContext);
 
     useEffect(() => {
@@ -44,6 +43,7 @@ const SignIn = () => {
     
         if(signInValidator.validate(forms).error){
             setErrorMessage(signInValidator.validate(forms).error.details[0].message);
+            setDisabled(false);
             return;
         }
 
@@ -53,7 +53,6 @@ const SignIn = () => {
         if(result.success){
             history.push("/cash-flow");
             setUserData({...result.data});
-            console.log({...result.data});
             localStorage.setItem("userLogin", JSON.stringify({...result.data}));      
             return;
         }
@@ -65,9 +64,9 @@ const SignIn = () => {
         <RegistrationContainer>
             <Logo>MyWallet</Logo>
             <RegistrationForm onSubmit = {signInFunction}>
-                <input placeholder = "Email"  value = {email} 
+                <input placeholder = "Email"  value = {email} disabled = {disabled}
                     onChange = {e => setEmail(e.target.value)}/>
-                <input placeholder = "Password" value = {password} 
+                <input placeholder = "Password" value = {password} disabled = {disabled}
                     onChange = {e => setPassword(e.target.value)}/>
                 <button disabled = {disabled}>Enter</button>
             </RegistrationForm>

@@ -7,6 +7,8 @@ import GlobalStyles from "./sharedStyles/GlobalStyles";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import CashFlow from "./components/CashFlow";
+import Incomes from "./components/Incomes";
+import Expenses from "./components/Expenses";
 
 const App = () => {
     const [userData, setUserData] = useState({});
@@ -28,6 +30,8 @@ const App = () => {
                 <Route exact path = "/" component = {SignIn} />
                 <Route exact path="/sign-up" component={SignUp} />
                 <Route exact path = "/cash-flow" component = {CashFlow} />
+                <Route exact path = "/incomes" component = {Incomes} />
+                <Route exact path = "/expenses" component = {Expenses} />
             </Switch>
         </Router>
     </UserContext.Provider>  

@@ -37,7 +37,6 @@ const CashFlow = () => {
         
         if(result?.data){
             setTransactions(result.data);
-            console.log(transactions);
             return;
         }
 
@@ -167,6 +166,75 @@ const NoTransactionsMessage = styled.h2`
     color: #868686;
 `
 
+const TransactionsContainer = styled.div`
+    width: 100%;
+    height: calc(100vh - 288px);
+    overflow-y: scroll;
+    margin-bottom: 41px;
+    padding-bottom: 11px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: #FFFFFF;
+
+`
+
+const TransactionBox = styled.div`
+    width: 100%;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+`
+
+const TransactionDate = styled.div`
+    width: 30px;
+    font-size: 16px;
+    line-height: 19px;
+    color: #C6C6C6;
+`
+
+const TransactionDescription = styled.div`
+    width: calc(100vw - 230px);
+    text-align: start;
+    overflow-x: hidden;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+`
+
+const TransactionValue = styled.div`
+    width: 70px;
+    font-size: 16px;
+    line-height: 19px;
+    color: #C70000;
+    text-align: end;
+`
+const BalanceBox = styled.div`
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    height: 25px;
+    z-index: 2;
+    bottom: 10px;
+    left: 0px;
+    width: 100%;
+    padding: 0 12px;
+`
+
+const BalanceText = styled.div`
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 20px;
+    color: #000000;
+`
+
+const BalanceValue = styled.div`
+    font-size: 17px;
+    line-height: 20px;
+    text-align: right;
+    color: #03AC00;
+`
+
 const RegisterBox = styled.div`
     cursor: pointer;
     display: flex;
@@ -192,73 +260,6 @@ const RegisterMessage = styled.p`
     font-size: 17px;
     line-height: 20px;
     color: #FFFFFF;
-`
-
-const TransactionsContainer = styled.div`
-    width: 100%;
-    height: calc(100vh - 288px);
-    overflow-y: scroll;
-    margin-bottom: 41px;
-    padding-bottom: 11px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    background: #FFFFFF;
-
-`
-
-const TransactionBox = styled.div`
-    width: 100%;
-    padding: 12px;
-    display: flex;
-    justify-content: space-between;
-`
-
-const TransactionDate = styled.div`
-    font-size: 16px;
-    line-height: 19px;
-    color: #C6C6C6;
-`
-
-const TransactionDescription = styled.div`
-    width: calc(100vw - 230px);
-    text-align: start;
-    overflow-x: hidden;
-    font-size: 16px;
-    line-height: 19px;
-    color: #000000;
-`
-
-const TransactionValue = styled.div`
-    font-size: 16px;
-    line-height: 19px;
-    color: #C70000;
-`
-
-const BalanceBox = styled.div`
-    position: absolute;
-    display: flex;
-    justify-content: space-between;
-    height: 25px;
-    z-index: 2;
-    bottom: 10px;
-    left: 0px;
-    width: 100%;
-    padding: 0 12px;
-`
-
-const BalanceText = styled.div`
-    font-weight: bold;
-    font-size: 17px;
-    line-height: 20px;
-    color: #000000;
-`
-
-const BalanceValue = styled.div`
-    font-size: 17px;
-    line-height: 20px;
-    text-align: right;
-    color: #03AC00;
 `
 
 export default CashFlow

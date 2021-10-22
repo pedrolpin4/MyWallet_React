@@ -40,11 +40,13 @@ const SignUp = () => {
 
         if(signUpValidator.validate(forms).error){
             setErrorMessage(signUpValidator.validate(forms).error.details[0].message);
+            setDisabled(false);
             return;
         }
 
         if(repeatPassword !== password){
             setErrorMessage("Your password and its confirmation are not the same");
+            setDisabled(false);
             return;
         }
 
@@ -63,14 +65,14 @@ const SignUp = () => {
         <RegistrationContainer>
             <Logo>MyWallet</Logo>
             <RegistrationForm onSubmit = {signUpFunction}>
-                <input placeholder = "Name" value = {name} 
+                <input placeholder = "Name" value = {name} disabled = {disabled}
                     onChange = {e => setName(e.target.value)}/>
-                <input placeholder = "Email"  value = {email} 
+                <input placeholder = "Email"  value = {email} disabled = {disabled}
                     onChange = {e => setEmail(e.target.value)}/>
-                <input placeholder = "Password" value = {password} 
+                <input placeholder = "Password" value = {password} disabled = {disabled}
                     onChange = {e => setPassword(e.target.value)}/>
                 <input placeholder = "Confirm your password" value = {repeatPassword} 
-                    onChange = {e => setrepeatPassword(e.target.value)} />
+                    onChange = {e => setrepeatPassword(e.target.value)} disabled = {disabled}/>
                 <button disabled = {disabled}>{disabled ?"spinner" : "Register"}</button>
             </RegistrationForm>
             <ErrorMessage>
