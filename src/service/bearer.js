@@ -1,7 +1,7 @@
 const BearerToken = (token) => {
     return {
         headers: {
-            Authorization: `Bearer ${userData.token}`
+            Authorization: `Bearer ${token}`
         }
     }
 }

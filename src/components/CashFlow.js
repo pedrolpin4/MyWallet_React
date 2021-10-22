@@ -11,14 +11,15 @@ const CashFlow = () => {
     const [errorMessage, setErrorMessage] = useState("")
 
     const cashFlowFunction = async (token) =>  {
-        const result = await service.getCashFlow()
+        const result = await service.getCashFlow(token)
         
-        if(result.data){
-            setTransactions(result.data)
+        if(result?.data){
+            setTransactions(result.data);
+            console.log(transactions);
             return;
         }
 
-        setErrorMessage(result.message);
+        setErrorMessage(result?.message);
         return;
     }
 
@@ -33,7 +34,7 @@ const CashFlow = () => {
                 <IoExitOutline color = {"#fff"} size = {30}/>
             </HeadersContainer>
             <TransactionsContainer>
-                {/*
+                {
                     transactions.length 
                     ?
                         transactions.map(t => (
@@ -59,7 +60,7 @@ const CashFlow = () => {
                             }
                         </NoTransactionsMessage>
 
-                */}
+                }
             </TransactionsContainer>
             <RegisterContainer> 
                 <RegisterBox>
@@ -124,7 +125,7 @@ const NoTransactionsMessage = styled.h2`
     font-size: 20px;
     line-height: 23px;
     text-align: center;
-    color: ${errorMessage ? "crimson" : "#868686"};
+    color: #868686;
 `
 
 const RegisterBox = styled.div`
@@ -152,6 +153,30 @@ const RegisterMessage = styled.p`
     font-size: 17px;
     line-height: 20px;
     color: #FFFFFF;
+`
+
+const TransactionContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
+
+const TransactionDate = styled.div`
+    font-size: 16px;
+    line-height: 19px;
+    color: #C6C6C6;
+`
+
+const TransactionDescription = styled.div`
+    font-size: 16px;
+    line-height: 19px;
+    color: #C6C6C6;
+`
+
+const TransactionValue = styled.div`
+    font-size: 16px;
+    line-height: 19px;
+    color: #C6C6C6;
 `
 
 export default CashFlow

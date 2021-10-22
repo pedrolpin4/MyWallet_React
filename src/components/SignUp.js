@@ -71,7 +71,7 @@ const SignUp = () => {
                     onChange = {e => setPassword(e.target.value)}/>
                 <input placeholder = "Confirm your password" value = {repeatPassword} 
                     onChange = {e => setrepeatPassword(e.target.value)} />
-                <button disabled = {disabled}>{disabled ? "Register" : "spinner" }</button>
+                <button disabled = {disabled}>{disabled ?"spinner" : "Register"}</button>
             </RegistrationForm>
             <ErrorMessage>
                 {errorMessage}

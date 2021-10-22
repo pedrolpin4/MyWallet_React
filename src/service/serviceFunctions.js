@@ -69,7 +69,7 @@ const getCashFlow = async (token) => {
     .catch(e => {
         if(e.response.status === 404) return{
             success: false,
-            message: ""
+            message: "Looks like you don't have any transactions"
         }
         return{
             success: false,
