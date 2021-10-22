@@ -1,14 +1,36 @@
+import dayjs from "dayjs";
 import { useContext, useEffect, useState } from "react"
 import { FiMinusCircle, FiPlusCircle } from  "react-icons/fi";
 import { IoExitOutline } from  "react-icons/io5";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import styled from "styled-components"
 import UserContext from "../context/UserContext"
 import service from "../service/serviceFunctions";
 
 const CashFlow = () => {
-    const { userData } = useContext(UserContext);
+    const history = useHistory();
+    const { userData, setUserData } = useContext(UserContext);
     const [transactions, setTransactions] = useState([]);
-    const [errorMessage, setErrorMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("");
+
+    if(!userData.token){
+        history.push("/")
+    }
+
+    const logOut = () => {
+        localStorage.removeItem("userLogin");
+        setUserData({});
+        history.push("/");
+    }
+
+    const sumTransactions = () =>{
+        let sum = 0;
+        transactions.forEach(t =>{
+            sum += t.value
+        })
+        return sum;
+    }
 
     const cashFlowFunction = async (token) =>  {
         const result = await service.getCashFlow(token)
@@ -29,27 +51,39 @@ const CashFlow = () => {
         <CashFlowContainer>
             <HeadersContainer> 
                 <HelloMessage>
-                    Olá, {userData.name}
+                    Hello, {userData.name}
                 </HelloMessage>
-                <IoExitOutline color = {"#fff"} size = {30}/>
+                <IoExitOutline color = {"#fff"} size = {30} onClick = {logOut}/>
             </HeadersContainer>
-            <TransactionsContainer>
+            <WhiteBox>
                 {
                     transactions.length 
                     ?
-                        transactions.map(t => (
-                            <TransactionContainer>
-                                <TransactionDate>
-                                    {t.date}
-                                </TransactionDate>
-                                <TransactionDescription>
-                                    {t.description}
-                                </TransactionDescription>
-                                <TransactionValue>
-                                    {t.value}
-                                </TransactionValue>
-                            </TransactionContainer>
-                        )) 
+                        <>
+                            <TransactionsContainer>
+                                {transactions.map(t => (
+                                        <TransactionBox key = {t.id}>
+                                            <TransactionDate>
+                                                {dayjs(t.date).format('DD/MM')}
+                                            </TransactionDate>
+                                            <TransactionDescription>
+                                                {t.description}
+                                            </TransactionDescription>
+                                            <TransactionValue>
+                                                {`$${t.value}.00`}
+                                            </TransactionValue>
+                                        </TransactionBox>
+                                ))} 
+                            </TransactionsContainer>
+                            <BalanceBox>
+                                <BalanceText>
+                                    BALANCE
+                                </BalanceText>
+                                <BalanceValue>
+                                    {`$${sumTransactions()}.00`}
+                                </BalanceValue>
+                            </BalanceBox>
+                        </>
                         :
                         <NoTransactionsMessage>
                             {
@@ -61,20 +95,24 @@ const CashFlow = () => {
                         </NoTransactionsMessage>
 
                 }
-            </TransactionsContainer>
+            </WhiteBox>
             <RegisterContainer> 
-                <RegisterBox>
-                    <FiPlusCircle color = {"#fff"} size = {25}/>
-                    <RegisterMessage> 
-                        New Income 
-                    </RegisterMessage>
-                </RegisterBox>
-                <RegisterBox>
-                    <FiMinusCircle color = {"#fff"} size = {25}/>
-                    <RegisterMessage> 
-                        New Expense
-                    </RegisterMessage>
-                </RegisterBox>
+                <Link to = {"/incomes"}>
+                    <RegisterBox>
+                        <FiPlusCircle color = {"#fff"} size = {25}/>
+                        <RegisterMessage> 
+                            New Income 
+                        </RegisterMessage>
+                    </RegisterBox>
+                </Link>
+                <Link to = {"/expenses"}>
+                    <RegisterBox>
+                        <FiMinusCircle color = {"#fff"} size = {25}/>
+                        <RegisterMessage> 
+                            New Expense
+                        </RegisterMessage>
+                    </RegisterBox>
+                </Link>
             </RegisterContainer>
         </CashFlowContainer>
     )
@@ -107,14 +145,15 @@ const HeadersContainer = styled.div`
     }
 `
 
-const TransactionsContainer = styled.div`
+const WhiteBox = styled.div`
+    position: relative;
     width: 100%;
-    height: calc(100vh - 221px);
+    height: calc(100vh - 231px);
     margin-bottom: 13px;
+    padding-top: 11px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
     background: #FFFFFF;
     border-radius: 5px;
 `
@@ -155,10 +194,24 @@ const RegisterMessage = styled.p`
     color: #FFFFFF;
 `
 
-const TransactionContainer = styled.div`
+const TransactionsContainer = styled.div`
+    width: 100%;
+    height: calc(100vh - 288px);
+    overflow-y: scroll;
+    margin-bottom: 41px;
+    padding-bottom: 11px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: #FFFFFF;
+
+`
+
+const TransactionBox = styled.div`
+    width: 100%;
+    padding: 12px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
 `
 
 const TransactionDate = styled.div`
@@ -168,15 +221,44 @@ const TransactionDate = styled.div`
 `
 
 const TransactionDescription = styled.div`
+    width: calc(100vw - 230px);
+    text-align: start;
+    overflow-x: hidden;
     font-size: 16px;
     line-height: 19px;
-    color: #C6C6C6;
+    color: #000000;
 `
 
 const TransactionValue = styled.div`
     font-size: 16px;
     line-height: 19px;
-    color: #C6C6C6;
+    color: #C70000;
+`
+
+const BalanceBox = styled.div`
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    height: 25px;
+    z-index: 2;
+    bottom: 10px;
+    left: 0px;
+    width: 100%;
+    padding: 0 12px;
+`
+
+const BalanceText = styled.div`
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 20px;
+    color: #000000;
+`
+
+const BalanceValue = styled.div`
+    font-size: 17px;
+    line-height: 20px;
+    text-align: right;
+    color: #03AC00;
 `
 
 export default CashFlow
