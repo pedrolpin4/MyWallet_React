@@ -1,35 +1,46 @@
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
+import UserContext from "../context/UserContext";
 import service from "../service/serviceFunctions";
 import UserRegistration from "../sharedStyles/UserRegistration";
 import validations from "../validation/JoiValidations";
 
+//turn on spinner
+
 const SignIn = () => {
-    const history = useHistory();
     const {
         RegistrationContainer,
         Logo,
         RegistrationForm,
         PageTransitionMessage,
         ErrorMessage
-    } = UserRegistration;
+    } = UserRegistration
 
+    const history = useHistory();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [disabled, setDisabled] = useState("");
+    const {userData, setUserData} = useContext(UserContext);
 
-    const signInValidator = validations.signIn
-
-    const forms = {
-        email,
-        password
-    };
+    useEffect(() => {
+        if(userData.token) {
+          history.push("/timeline")
+        }
+    }, [userData, history]);
+    
 
     const signInFunction = async (e) => {
         e.preventDefault();
         setDisabled(true);
 
+        const signInValidator = validations.signIn
+
+        const forms = {
+            email,
+            password
+        };
+    
         if(signInValidator.validate(forms).error){
             setErrorMessage(signInValidator.validate(forms).error.details[0].message);
             return;
@@ -40,7 +51,9 @@ const SignIn = () => {
 
         if(result.success){
             history.push("/cash-flow");
-            //save user info
+            console.log(result.data);
+            setUserData(result.data);
+            localStorage.setItem("userLogin", JSON.stringify(result.data));      
             return;
         }
 
