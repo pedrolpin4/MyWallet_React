@@ -1,4 +1,5 @@
 import API from "./api";
+import BearerToken from "./bearer";
 
 const postSignUp = async (forms) => {
     const response = await API.post("/sign-up", forms)
@@ -63,9 +64,28 @@ const postSignIn = async (forms) => {
     return response
 }
 
+const getCashFlow = async (token) => {
+    const response = await API.get("/cash-flow", BearerToken(token))
+    .catch(e => {
+        if(e.response.status === 404) return{
+            success: false,
+            message: ""
+        }
+        return{
+            success: false,
+            message: "Looks like our server is not okay, we'll fix it ASAP"
+        }
+    })
+    if(response.data) return {
+        success: true,
+        data: response.data
+    }
+}
+
 const service = {
     postSignUp,
-    postSignIn
+    postSignIn,
+    getCashFlow
 };
 
 export default service

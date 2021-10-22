@@ -6,6 +6,7 @@ import UserRegistration from "../sharedStyles/UserRegistration";
 import validations from "../validation/JoiValidations";
 
 //turn on spinner
+//disabled no input
 
 const SignIn = () => {
     const {
@@ -25,7 +26,7 @@ const SignIn = () => {
 
     useEffect(() => {
         if(userData.token) {
-          history.push("/timeline")
+          history.push("/cash-flow")
         }
     }, [userData, history]);
     
@@ -51,9 +52,9 @@ const SignIn = () => {
 
         if(result.success){
             history.push("/cash-flow");
-            console.log(result.data);
-            setUserData(result.data);
-            localStorage.setItem("userLogin", JSON.stringify(result.data));      
+            setUserData({...result.data});
+            console.log({...result.data});
+            localStorage.setItem("userLogin", JSON.stringify({...result.data}));      
             return;
         }
 

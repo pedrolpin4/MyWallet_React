@@ -5,6 +5,7 @@ import service from "../service/serviceFunctions";
 import validations from "../validation/JoiValidations";
 
 // habilitar spinner
+//disabled no input
 
 const SignUp = () => {
     const history = useHistory();
@@ -70,7 +71,7 @@ const SignUp = () => {
                     onChange = {e => setPassword(e.target.value)}/>
                 <input placeholder = "Confirm your password" value = {repeatPassword} 
                     onChange = {e => setrepeatPassword(e.target.value)} />
-                <button disabled = {disabled}>{disabled ? "Enter" : "spinner" }</button>
+                <button disabled = {disabled}>{disabled ? "Register" : "spinner" }</button>
             </RegistrationForm>
             <ErrorMessage>
                 {errorMessage}

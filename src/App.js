@@ -3,9 +3,10 @@ import { BrowserRouter as Router,
         Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserContext from "./context/UserContext";
+import GlobalStyles from "./sharedStyles/GlobalStyles";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
-import GlobalStyles from "./sharedStyles/GlobalStyles";
+import CashFlow from "./components/CashFlow";
 
 const App = () => {
     const [userData, setUserData] = useState({});
@@ -26,6 +27,7 @@ const App = () => {
             <Switch>
                 <Route exact path = "/" component = {SignIn} />
                 <Route exact path="/sign-up" component={SignUp} />
+                <Route exact path = "/cash-flow" component = {CashFlow} />
             </Switch>
         </Router>
     </UserContext.Provider>  
