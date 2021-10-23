@@ -12,9 +12,15 @@ const signIn = Joi.object({
     password: Joi.string().min(6).max(12).required(),
 })
 
+const IncomesExpenses = Joi.object({
+    value: Joi.number().positive().greater(0).required(),
+    description: Joi.string().min(2).max(40).required()
+})
+
 const validations = {
     signUp,
-    signIn
+    signIn,
+    IncomesExpenses
 }
 
 export default validations

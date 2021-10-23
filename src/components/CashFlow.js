@@ -14,7 +14,7 @@ const CashFlow = () => {
     const [transactions, setTransactions] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
 
-    if(!userData.token){
+    if(!localStorage.getItem("userLogin")){
         history.push("/")
     }
 
@@ -27,20 +27,20 @@ const CashFlow = () => {
     const sumTransactions = () =>{
         let sum = 0;
         transactions.forEach(t =>{
-            sum += t.value
+            sum += Number(t.value)
         })
         return sum;
     }
 
     const cashFlowFunction = async (token) =>  {
-        const result = await service.getCashFlow(token)
-        
-        if(result?.data){
+        const result = await service.getCashFlow(token);
+
+        if(result.data){
             setTransactions(result.data);
             return;
         }
 
-        setErrorMessage(result?.message);
+        setErrorMessage(result.message);
         return;
     }
 
@@ -54,13 +54,14 @@ const CashFlow = () => {
                 </HelloMessage>
                 <IoExitOutline color = {"#fff"} size = {30} onClick = {logOut}/>
             </HeadersContainer>
-            <WhiteBox>
+            <WhiteBox hasTransactions = {transactions.length}>
                 {
                     transactions.length 
                     ?
                         <>
                             <TransactionsContainer>
-                                {transactions.map(t => (
+                                {transactions.map(t => {
+                                   return (
                                         <TransactionBox key = {t.id}>
                                             <TransactionDate>
                                                 {dayjs(t.date).format('DD/MM')}
@@ -68,31 +69,29 @@ const CashFlow = () => {
                                             <TransactionDescription>
                                                 {t.description}
                                             </TransactionDescription>
-                                            <TransactionValue>
-                                                {`$${t.value}.00`}
+                                            <TransactionValue 
+                                                className = {Number(t.value) < 0 ? "red" : "green"}
+                                            >
+                                                {`$${Number(Math.abs(t.value)).toFixed(2)}`}
                                             </TransactionValue>
                                         </TransactionBox>
-                                ))} 
+                                )})} 
                             </TransactionsContainer>
                             <BalanceBox>
                                 <BalanceText>
                                     BALANCE
                                 </BalanceText>
-                                <BalanceValue>
-                                    {`$${sumTransactions()}.00`}
+                                <BalanceValue
+                                    className = {sumTransactions() < 0 ? "red" : "green"}
+                                >
+                                    {`$${Math.abs(sumTransactions()).toFixed(2)}`}
                                 </BalanceValue>
                             </BalanceBox>
                         </>
                         :
                         <NoTransactionsMessage>
-                            {
-                                errorMessage ?
-                                    errorMessage :
-                                    `There are no incomes or expenses 
-                                    registered in your account`
-                            }
+                            {errorMessage}
                         </NoTransactionsMessage>
-
                 }
             </WhiteBox>
             <RegisterContainer> 
@@ -124,6 +123,12 @@ const CashFlowContainer = styled.div`
     width: 100%;
     height: 100%;
     padding: 25px;
+    .red{
+        color: #C70000;
+    }
+    .green{
+        color: #03AC00;
+    }
 `
 
 const HelloMessage = styled.h1`
@@ -152,8 +157,9 @@ const WhiteBox = styled.div`
     padding-top: 11px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: ${props => props.hasTransactions ? "flex-start" : "center"};
     background: #FFFFFF;
+    align-items:${props => props.hasTransactions ? "flex-start" : "center"} ;
     border-radius: 5px;
 `
 
@@ -206,7 +212,6 @@ const TransactionValue = styled.div`
     width: 70px;
     font-size: 16px;
     line-height: 19px;
-    color: #C70000;
     text-align: end;
 `
 const BalanceBox = styled.div`

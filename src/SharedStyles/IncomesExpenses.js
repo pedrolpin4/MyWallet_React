@@ -7,24 +7,6 @@ const LaunchingContainer = styled.div`
     display: flex;
     flex-direction: column;
 
-    a{
-        align-self: center;
-    }
-`
-
-const LaunchingHeader = styled.h1`
-    font-weight: bold;
-    margin-bottom: 40px;
-    font-size: 26px;
-    line-height: 31px;
-    color: #FFFFFF;
-`
-
-const LaunchingForm = styled.form`
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    
     input{
         width: 100%;
         align-self: center;
@@ -43,9 +25,26 @@ const LaunchingForm = styled.form`
             line-height: 23px;
             color: #000000;
         }
-
     }
 
+    a{
+        align-self: center;
+    }
+`
+
+const LaunchingHeader = styled.h1`
+    font-weight: bold;
+    margin-bottom: 40px;
+    font-size: 26px;
+    line-height: 31px;
+    color: #FFFFFF;
+`
+
+const LaunchingForm = styled.form`
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    
     button{
         width: 100%;
         align-self: center;
@@ -69,6 +68,17 @@ const CancelButton = styled.div`
     opacity: 0.8;
 `
 
+const ErrorMessage = styled.p`
+    font-family: Raleway;
+    align-self: center;
+    font-size: 15px;
+    line-height: 18px;
+    margin-bottom: 13px;
+    color: crimson;
+    font-weight: 700;
+
+`
+
 
 
 
@@ -76,7 +86,8 @@ const IncomesExpenses = {
     LaunchingHeader,
     LaunchingContainer,
     LaunchingForm,
-    CancelButton
+    CancelButton,
+    ErrorMessage
 }
 
 export default IncomesExpenses
