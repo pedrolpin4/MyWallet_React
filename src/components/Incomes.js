@@ -43,7 +43,6 @@ const Incomes = () => {
             return;
         }
 
-        console.log(forms);
         const result = await service.postIncomes(forms, userData.token)
         
         if(result.success){

@@ -42,9 +42,7 @@ const Expenses = () => {
             return;
         }
 
-        console.log(forms);
         const result = await service.postExpenses(forms, userData.token)
-        console.log(result);
 
         if(result.success){
             history.push("/cash-flow");
