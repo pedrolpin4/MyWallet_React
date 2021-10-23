@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
-import service from "../service/serviceFunctions";
+import auth from "../service/auth";
 import UserRegistration from "../sharedStyles/UserRegistration";
 import validations from "../validation/JoiValidations";
 
@@ -47,7 +47,7 @@ const SignIn = () => {
             return;
         }
 
-        const result = await service.postSignIn(forms)
+        const result = await auth.postSignIn(forms)
         setDisabled(false);
 
         if(result.success){
@@ -67,7 +67,7 @@ const SignIn = () => {
                 <input placeholder = "Email"  value = {email} disabled = {disabled}
                     onChange = {e => setEmail(e.target.value)}/>
                 <input placeholder = "Password" value = {password} disabled = {disabled}
-                    onChange = {e => setPassword(e.target.value)}/>
+                   type = "password" onChange = {e => setPassword(e.target.value)}/>
                 <button disabled = {disabled}>Enter</button>
             </RegistrationForm>
             <ErrorMessage>

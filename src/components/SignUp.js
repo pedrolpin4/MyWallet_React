@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import UserRegistration from "../sharedStyles/UserRegistration";
-import service from "../service/serviceFunctions";
+import auth from "../service/auth";
 import validations from "../validation/JoiValidations";
 
 // habilitar spinner
-//disabled no input
 
 const SignUp = () => {
     const history = useHistory();
@@ -50,7 +49,7 @@ const SignUp = () => {
             return;
         }
 
-        const result = await service.postSignUp(forms);
+        const result = await auth.postSignUp(forms);
         setDisabled(false);
         
         if(result.success){
@@ -70,9 +69,9 @@ const SignUp = () => {
                 <input placeholder = "Email"  value = {email} disabled = {disabled}
                     onChange = {e => setEmail(e.target.value)}/>
                 <input placeholder = "Password" value = {password} disabled = {disabled}
-                    onChange = {e => setPassword(e.target.value)}/>
+                    type = "password" onChange = {e => setPassword(e.target.value)}/>
                 <input placeholder = "Confirm your password" value = {repeatPassword} 
-                    onChange = {e => setrepeatPassword(e.target.value)} disabled = {disabled}/>
+                    type = "password" onChange = {e => setrepeatPassword(e.target.value)} disabled = {disabled}/>
                 <button disabled = {disabled}>{disabled ?"spinner" : "Register"}</button>
             </RegistrationForm>
             <ErrorMessage>

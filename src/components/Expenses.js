@@ -4,7 +4,7 @@ import IncomesExpenses from "../sharedStyles/IncomesExpenses";
 import validations from "../validation/JoiValidations";
 import UserContext from "../context/UserContext";
 import CurrencyInput from 'react-currency-input';
-import service from "../service/serviceFunctions";
+import financialRecords from "../service/financialRecords";
 
 const Expenses = () => {
     const {
@@ -42,7 +42,7 @@ const Expenses = () => {
             return;
         }
 
-        const result = await service.postExpenses(forms, userData.token)
+        const result = await financialRecords.postExpenses(forms, userData.token)
 
         if(result.success){
             history.push("/cash-flow");

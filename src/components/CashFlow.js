@@ -6,7 +6,7 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components"
 import UserContext from "../context/UserContext"
-import service from "../service/serviceFunctions";
+import financialRecords from "../service/financialRecords";
 
 const CashFlow = () => {
     const history = useHistory();
@@ -33,7 +33,7 @@ const CashFlow = () => {
     }
 
     const cashFlowFunction = async (token) =>  {
-        const result = await service.getCashFlow(token);
+        const result = await financialRecords.getCashFlow(token)
 
         if(result.data){
             setTransactions(result.data);
@@ -44,7 +44,7 @@ const CashFlow = () => {
         return;
     }
 
-    useEffect(() => cashFlowFunction(userData.token), [userData])
+    useEffect(() => cashFlowFunction(userData.token), [userData.token])
 
     return(
         <CashFlowContainer>
