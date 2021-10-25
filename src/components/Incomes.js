@@ -6,7 +6,6 @@ import validations from "../validation/JoiValidations";
 import CurrencyInput from "react-currency-input"
 import financialRecords from "../service/financialRecords";
 
-
 const Incomes = () => {
     const {
         LaunchingHeader,

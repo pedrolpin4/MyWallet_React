@@ -50,9 +50,9 @@ const SignIn = () => {
         setDisabled(false);
 
         if(result.success){
-            history.push("/cash-flow");
             setUserData({...result.data});
-            localStorage.setItem("userLogin", JSON.stringify({...result.data}));      
+            localStorage.setItem("userLogin", JSON.stringify({...result.data}));
+            history.push("/cash-flow");      
             return;
         }
 

@@ -17,13 +17,11 @@ const App = () => {
         const userLogin = JSON.parse(localStorage.getItem("userLogin"));
         if(userLogin){
             setUserData(userLogin);
-        } 
+        }
     }, []);
     
     return(
-    <UserContext.Provider
-        value={{userData,setUserData}}
-    >
+    <UserContext.Provider value={{userData,setUserData}}>
         <Router>
             <GlobalStyles />
             <Switch>
