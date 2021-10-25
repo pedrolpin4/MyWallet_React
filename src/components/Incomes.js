@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
-import IncomesExpenses from "../sharedStyles/IncomesExpenses";
+import IncomesExpenses from "../styles/IncomesExpenses";
 import validations from "../validation/JoiValidations";
 import CurrencyInput from "react-currency-input"
 import financialRecords from "../service/financialRecords";

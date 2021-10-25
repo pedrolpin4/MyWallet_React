@@ -44,7 +44,7 @@ const CashFlow = () => {
         return;
     }
 
-    useEffect(() => cashFlowFunction(userData.token), [userData.token])
+    useEffect(() => cashFlowFunction(JSON.parse(localStorage.getItem("userLogin"))?.token), [])
 
     return(
         <CashFlowContainer>

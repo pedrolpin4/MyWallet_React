@@ -13,7 +13,7 @@ const signIn = Joi.object({
 })
 
 const IncomesExpenses = Joi.object({
-    value: Joi.number().positive().greater(0).required(),
+    value: Joi.number().positive().greater(0).max(10000).required(),
     description: Joi.string().min(2).max(40).required()
 })
 

@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import UserRegistration from "../sharedStyles/UserRegistration";
+import UserRegistration from "../styles/UserRegistration";
 import auth from "../service/auth";
 import validations from "../validation/JoiValidations";
-
-// habilitar spinner
+import Loading from "../assets/Loading";
 
 const SignUp = () => {
     const history = useHistory();
@@ -72,7 +71,7 @@ const SignUp = () => {
                     type = "password" onChange = {e => setPassword(e.target.value)}/>
                 <input placeholder = "Confirm your password" value = {repeatPassword} 
                     type = "password" onChange = {e => setrepeatPassword(e.target.value)} disabled = {disabled}/>
-                <button disabled = {disabled}>{disabled ?"spinner" : "Register"}</button>
+                <button disabled = {disabled}>{disabled ?<Loading spinnerSize = {25} color = {"#fff"}/> : "Register"}</button>
             </RegistrationForm>
             <ErrorMessage>
                 {errorMessage}

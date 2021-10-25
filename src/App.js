@@ -3,7 +3,7 @@ import { BrowserRouter as Router,
         Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserContext from "./context/UserContext";
-import GlobalStyles from "./sharedStyles/GlobalStyles";
+import GlobalStyles from "./styles/GlobalStyles";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import CashFlow from "./components/CashFlow";

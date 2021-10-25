@@ -2,10 +2,9 @@ import { useContext, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import auth from "../service/auth";
-import UserRegistration from "../sharedStyles/UserRegistration";
+import UserRegistration from "../styles/UserRegistration";
 import validations from "../validation/JoiValidations";
-
-//turn on spinner
+import Loading from "../assets/Loading";
 
 const SignIn = () => {
     const {
@@ -68,7 +67,7 @@ const SignIn = () => {
                     onChange = {e => setEmail(e.target.value)}/>
                 <input placeholder = "Password" value = {password} disabled = {disabled}
                    type = "password" onChange = {e => setPassword(e.target.value)}/>
-                <button disabled = {disabled}>Enter</button>
+                <button disabled = {disabled}>{disabled ?<Loading spinnerSize = {25} color = {"#fff"}/> : "Enter"}</button>
             </RegistrationForm>
             <ErrorMessage>
                 {errorMessage}
