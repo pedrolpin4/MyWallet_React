@@ -7,6 +7,20 @@ const RegistrationContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    backface-visibility: hidden;
+    @keyframes moveInRight{
+        0%{
+            opacity: 0;
+            transform: translateX(300px);
+        }
+
+        100%{
+            opacity: 1;
+            transform: translate(0);
+        }
+    }
+
+
 `
 
 const RegistrationForm = styled.form`
@@ -25,6 +39,7 @@ const RegistrationForm = styled.form`
         line-height: 23px;
         color: #000000;
         padding: 15px;
+        animation: moveInRight .5s ease-in-out;
 
         ::placeholder{
             font-family: 'Raleway', sans-serif;
@@ -32,7 +47,6 @@ const RegistrationForm = styled.form`
             line-height: 23px;
             color: #000000;
         }
-
     }
 
     button{
@@ -46,6 +60,7 @@ const RegistrationForm = styled.form`
         line-height: 23px;
         margin-bottom: 32px;
         text-align: center;
+        animation: moveInRight .5s ease-in-out;
     }
 
 `
@@ -56,6 +71,7 @@ const Logo = styled.h1`
     line-height: 50px;
     margin-bottom: 28px;
     color: #FFFFFF;
+    animation: moveInRight .5s ease-in-out;
 `
 
 const PageTransitionMessage = styled.p`
@@ -64,6 +80,7 @@ const PageTransitionMessage = styled.p`
     line-height: 18px;
     color: #FFFFFF;
     font-weight: 700;
+    animation: moveInRight .5s ease-in-out;
 ` 
 const ErrorMessage = styled.p`
     font-family: Raleway;

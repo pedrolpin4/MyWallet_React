@@ -6,6 +6,18 @@ const LaunchingContainer = styled.div`
     padding: 25px;
     display: flex;
     flex-direction: column;
+    @keyframes moveInRight{
+        0%{
+            opacity: 0;
+            transform: translateX(300px);
+        }
+
+        100%{
+            opacity: 1;
+            transform: translate(0);
+        }
+    }
+
 
     input{
         width: 100%;
@@ -18,6 +30,7 @@ const LaunchingContainer = styled.div`
         line-height: 23px;
         color: #000000;
         padding: 15px;
+        animation: moveInRight .5s ease-in-out;
 
         ::placeholder{
             font-family: 'Raleway', sans-serif;
@@ -29,6 +42,7 @@ const LaunchingContainer = styled.div`
 
     a{
         align-self: center;
+        animation: moveInRight .5s ease-in-out;
     }
 `
 
@@ -38,6 +52,7 @@ const LaunchingHeader = styled.h1`
     font-size: 26px;
     line-height: 31px;
     color: #FFFFFF;
+    animation: moveInRight .5s ease-in-out;
 `
 
 const LaunchingForm = styled.form`
@@ -47,6 +62,7 @@ const LaunchingForm = styled.form`
     
     button{
         width: 100%;
+        cursor: pointer;
         align-self: center;
         height: 58px;
         background: #A328D6;
@@ -56,6 +72,16 @@ const LaunchingForm = styled.form`
         line-height: 23px;
         margin-bottom: 18px;
         text-align: center;
+        animation: moveInRight .5s ease-in-out;
+        transition: all .15s ease-in-out;
+        &:hover{
+        transform: translateY(-3px);
+        box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.3);
+        }
+        &:active{
+            transform: translateY(-1px);
+            box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+        }
     }
 `
 
@@ -65,7 +91,14 @@ const CancelButton = styled.div`
     font-size: 20px;
     line-height: 18px;
     color: #FFF;
-    opacity: 0.8;
+    &:hover{
+        transform: translateY(-3px);
+        text-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.3);
+        }
+    &:active{
+        transform: translateY(-1px);
+        text-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+    }
 `
 
 const ErrorMessage = styled.p`

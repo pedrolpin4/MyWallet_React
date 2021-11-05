@@ -143,9 +143,16 @@ const HeadersContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 23px;
+    transition: all .2s ease-in;
 
     svg{
         cursor: pointer;
+        &:hover{
+            transform: translateY(-1px);
+        }
+        &:active{
+            transform: translateY(0);
+        }
     }
 `
 
@@ -250,6 +257,16 @@ const RegisterBox = styled.div`
     height: 114px;
     background: #A328D6;
     border-radius: 5px;
+    transition: all .15s ease-in-out;
+
+    &:hover{
+        transform: translateY(-3px);
+        box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.3);
+    }
+    &:active{
+        transform: translateY(-1px);
+        box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+    }
 `
 
 const RegisterContainer = styled.div`
