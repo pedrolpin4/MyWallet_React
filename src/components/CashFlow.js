@@ -1,18 +1,20 @@
 import dayjs from "dayjs";
 import { useContext, useEffect, useState } from "react"
 import { FiMinusCircle, FiPlusCircle } from  "react-icons/fi";
-import { IoExitOutline } from  "react-icons/io5";
+import { IoMenuOutline } from  "react-icons/io5";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components"
 import UserContext from "../context/UserContext"
 import financialRecords from "../service/financialRecords";
+import Sidebar from "./Sidebar";
 
 const CashFlow = () => {
     const history = useHistory();
     const { userData, setUserData } = useContext(UserContext);
     const [transactions, setTransactions] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
+    const [sidebar, setSidebar] = useState(false)
 
     if(!localStorage.getItem("userLogin")){
         history.push("/")
@@ -48,11 +50,12 @@ const CashFlow = () => {
 
     return(
         <CashFlowContainer>
+            <Sidebar sidebar = {sidebar} setSidebar = {setSidebar} logOut = {logOut}/>
             <HeadersContainer> 
                 <HelloMessage>
                     Hello, {userData.name}
                 </HelloMessage>
-                <IoExitOutline color = {"#fff"} size = {30} onClick = {logOut}/>
+                <IoMenuOutline size = {30} onClick = {() => setSidebar(true)}/>
             </HeadersContainer>
             <WhiteBox hasTransactions = {transactions.length}>
                 {
@@ -97,7 +100,7 @@ const CashFlow = () => {
             <RegisterContainer> 
                 <Link to = {"/incomes"}>
                     <RegisterBox>
-                        <FiPlusCircle color = {"#fff"} size = {25}/>
+                        <FiPlusCircle size = {25}/>
                         <RegisterMessage> 
                             New Income 
                         </RegisterMessage>
@@ -105,7 +108,7 @@ const CashFlow = () => {
                 </Link>
                 <Link to = {"/expenses"}>
                     <RegisterBox>
-                        <FiMinusCircle color = {"#fff"} size = {25}/>
+                        <FiMinusCircle size = {25}/>
                         <RegisterMessage> 
                             New Expense
                         </RegisterMessage>
@@ -124,10 +127,10 @@ const CashFlowContainer = styled.div`
     height: 100%;
     padding: 25px;
     .red{
-        color: #C70000;
+        color: ${({ theme: { colors } } ) => colors.quarternary};
     }
     .green{
-        color: #03AC00;
+        color: ${({ theme: { colors } } ) => colors.terciary};
     }
 `
 
@@ -135,7 +138,7 @@ const HelloMessage = styled.h1`
     font-weight: bold;
     font-size: 26px;
     line-height: 31px;
-    color: #FFFFFF;
+    color: ${({ theme: { colors } } ) => colors.secondary};
 ` 
 
 const HeadersContainer = styled.div`
@@ -147,6 +150,7 @@ const HeadersContainer = styled.div`
 
     svg{
         cursor: pointer;
+        color: ${({ theme: { colors } } ) => colors.secondary};
         &:hover{
             transform: translateY(-1px);
         }
@@ -165,7 +169,7 @@ const WhiteBox = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: ${props => props.hasTransactions ? "flex-start" : "center"};
-    background: #FFFFFF;
+    background: ${({ theme: { colors } } ) => colors.secondary};
     align-items:${props => props.hasTransactions ? "flex-start" : "center"} ;
     border-radius: 5px;
 `
@@ -176,7 +180,7 @@ const NoTransactionsMessage = styled.h2`
     font-size: 20px;
     line-height: 23px;
     text-align: center;
-    color: #868686;
+    color: ${({ theme: { colors } } ) => colors.secondaryDark};
 `
 
 const TransactionsContainer = styled.div`
@@ -188,7 +192,7 @@ const TransactionsContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    background: #FFFFFF;
+    background: ${({ theme: { colors } } ) => colors.secondary};
 
 `
 
@@ -203,7 +207,7 @@ const TransactionDate = styled.div`
     width: 30px;
     font-size: 16px;
     line-height: 19px;
-    color: #C6C6C6;
+    color: ${({ theme: { colors } } ) => colors.secondaryDark};
 `
 
 const TransactionDescription = styled.div`
@@ -212,7 +216,7 @@ const TransactionDescription = styled.div`
     overflow-x: hidden;
     font-size: 16px;
     line-height: 19px;
-    color: #000000;
+    color: ${({ theme: { colors } } ) => colors.secondary};
 `
 
 const TransactionValue = styled.div`
@@ -237,14 +241,14 @@ const BalanceText = styled.div`
     font-weight: bold;
     font-size: 17px;
     line-height: 20px;
-    color: #000000;
+    color: ${({ theme: { colors } } ) => colors.inputs};
 `
 
 const BalanceValue = styled.div`
     font-size: 17px;
     line-height: 20px;
     text-align: right;
-    color: #03AC00;
+    color: ${({ theme: { colors } } ) => colors.terciary};
 `
 
 const RegisterBox = styled.div`
@@ -255,9 +259,12 @@ const RegisterBox = styled.div`
     padding: 10px;
     width: calc((100vw - 65px)/2);
     height: 114px;
-    background: #A328D6;
+    background: ${ ( { theme: {colors} } ) => colors.primary };
     border-radius: 5px;
     transition: all .15s ease-in-out;
+    svg{
+        color: ${({ theme: { colors } } ) => colors.secondary};
+    }
 
     &:hover{
         transform: translateY(-3px);
@@ -281,7 +288,7 @@ const RegisterMessage = styled.p`
     font-weight: bold;
     font-size: 17px;
     line-height: 20px;
-    color: #FFFFFF;
+    color: ${({ theme: { colors } } ) => colors.secondary};
 `
 
 export default CashFlow

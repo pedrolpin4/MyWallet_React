@@ -5,7 +5,7 @@ const GlobalStyles = createGlobalStyle`
         font-family: Raleway;
         height: 100%;
         width: 100%;
-        background-color: #8C11BE;
+        background-color: ${({ theme: { colors } } ) => colors.primaryDark };
         display: flex;
         flex-direction: column;
         justify-content: center;

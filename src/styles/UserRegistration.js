@@ -19,8 +19,6 @@ const RegistrationContainer = styled.div`
             transform: translate(0);
         }
     }
-
-
 `
 
 const RegistrationForm = styled.form`
@@ -32,12 +30,12 @@ const RegistrationForm = styled.form`
         width: calc(100% - 50px);
         align-self: center;
         height: 58px;
-        background: #FFFFFF;
+        background: ${({ theme: { colors } } ) => colors.secondary};
         border-radius: 5px;
         margin-bottom: 13px;
         font-size: 20px;
         line-height: 23px;
-        color: #000000;
+        color: ${({ theme: { colors } } ) => colors.inputs};
         padding: 15px;
         animation: moveInRight .5s ease-in-out;
 
@@ -45,7 +43,7 @@ const RegistrationForm = styled.form`
             font-family: 'Raleway', sans-serif;
             font-size: 20px;
             line-height: 23px;
-            color: #000000;
+            color: ${({ theme: { colors } } ) => colors.inputs};
         }
     }
 
@@ -53,9 +51,9 @@ const RegistrationForm = styled.form`
         width: calc(100% - 50px);
         align-self: center;
         height: 58px;
-        background: #A328D6;
+        background: ${ ( { theme: {colors} } ) => colors.primary };
         border-radius: 5px;
-        color: #FFFFFF;
+        color: ${({ theme: { colors } } ) => colors.secondary};
         font-size: 20px;
         line-height: 23px;
         margin-bottom: 32px;
@@ -70,7 +68,7 @@ const Logo = styled.h1`
     font-size: 32px;
     line-height: 50px;
     margin-bottom: 28px;
-    color: #FFFFFF;
+    color: ${({ theme: { colors } } ) => colors.secondary};
     animation: moveInRight .5s ease-in-out;
 `
 
@@ -78,7 +76,7 @@ const PageTransitionMessage = styled.p`
     font-family: Raleway;
     font-size: 15px;
     line-height: 18px;
-    color: #FFFFFF;
+    color: ${({ theme: { colors } } ) => colors.secondary};
     font-weight: 700;
     animation: moveInRight .5s ease-in-out;
 ` 

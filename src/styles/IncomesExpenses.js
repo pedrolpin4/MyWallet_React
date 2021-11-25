@@ -18,17 +18,16 @@ const LaunchingContainer = styled.div`
         }
     }
 
-
     input{
         width: 100%;
         align-self: center;
         height: 58px;
-        background: #FFFFFF;
+        background: ${({ theme: { colors } } ) => colors.secondary};
         border-radius: 5px;
         margin-bottom: 13px;
         font-size: 20px;
         line-height: 23px;
-        color: #000000;
+        color: ${({ theme: { colors } } ) => colors.inputs};
         padding: 15px;
         animation: moveInRight .5s ease-in-out;
 
@@ -36,7 +35,7 @@ const LaunchingContainer = styled.div`
             font-family: 'Raleway', sans-serif;
             font-size: 20px;
             line-height: 23px;
-            color: #000000;
+            color: ${({ theme: { colors } } ) => colors.inputs};
         }
     }
 
@@ -51,7 +50,7 @@ const LaunchingHeader = styled.h1`
     margin-bottom: 40px;
     font-size: 26px;
     line-height: 31px;
-    color: #FFFFFF;
+    color: ${({ theme: { colors } } ) => colors.secondary};
     animation: moveInRight .5s ease-in-out;
 `
 
@@ -65,9 +64,9 @@ const LaunchingForm = styled.form`
         cursor: pointer;
         align-self: center;
         height: 58px;
-        background: #A328D6;
+        background: ${ ( { theme: {colors} } ) => colors.primary };
         border-radius: 5px;
-        color: #FFFFFF;
+        color: ${({ theme: { colors } } ) => colors.secondary};
         font-size: 20px;
         line-height: 23px;
         margin-bottom: 18px;
@@ -90,7 +89,7 @@ const CancelButton = styled.div`
     font-weight: bold;
     font-size: 20px;
     line-height: 18px;
-    color: #FFF;
+    color: ${({ theme: { colors } } ) => colors.secondary};
     &:hover{
         transform: translateY(-3px);
         text-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.3);
