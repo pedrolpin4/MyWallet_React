@@ -216,7 +216,7 @@ const TransactionDescription = styled.div`
     overflow-x: hidden;
     font-size: 16px;
     line-height: 19px;
-    color: ${({ theme: { colors } } ) => colors.secondary};
+    color: ${({ theme: { colors } } ) => colors.inputs};
 `
 
 const TransactionValue = styled.div`

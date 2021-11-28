@@ -17,6 +17,7 @@ const App = () => {
     
     useEffect(() => {
         const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+        console.log(process.env.NODE_ENV);
         if(userLogin){
             setUserData(userLogin);
         }

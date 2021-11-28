@@ -1,8 +1,12 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { IoExitOutline } from "react-icons/io5";
+import UserContext from "../context/UserContext"
 import styled from "styled-components";
 
 const Sidebar = ({sidebar, logOut, setSidebar}) => {
+    const {
+        userData
+    } = useContext(UserContext)
 
     const sidebarRef = useRef();
 
@@ -19,7 +23,7 @@ const Sidebar = ({sidebar, logOut, setSidebar}) => {
         </NavOverlay>
         <NavMenu sidebar = {sidebar}>
             <NavMenuHeader>
-                <p>Welcome, Bitch</p>
+                <p>Welcome, {userData.name}</p>
                 <IoExitOutline size = {20} onClick = {logOut}/>    
             </NavMenuHeader>
         </NavMenu>
