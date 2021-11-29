@@ -28,7 +28,7 @@ Think about an ordinary movie theater, ok, now forget it! Cineflex is not an app
  ```
  5. Finally access http://localhost:3000 on your favorite browser
     
- 6. If you want to run my Back end repository too, check it out on https://github.com/pedrolpin4/Cineflex_BackEnd
+ 6. If you want to run my Back end repository too, check it out on https://github.com/pedrolpin4/MyWallet_BackEnd
 
 ## What comes next?
 
