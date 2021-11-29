@@ -12,9 +12,9 @@ Do you like registering your incomes and expenses in an old notebook? Well, I do
 
 ## Features
 
-- [x] register and log into the app
-- [x] see your total balance
+- [x] login and sign-up
 - [x] see your cash-flow with date, description and value infos
+- [x] total balance based on your cash-flow
 - [x] register your credits (expenses) and yur debits (incomes)
 
 ## How to run?
