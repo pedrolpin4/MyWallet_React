@@ -56,7 +56,7 @@ const CashFlow = ({setThemeType, themeType}) => {
                 <HelloMessage>
                     Hello, {userData.name}
                 </HelloMessage>
-                <IoMenuOutline size = {30} onClick = {() => setSidebar(true)}/>
+                <IoMenuOutline size = {30} className = "menu" onClick = {() => setSidebar(true)}/>
             </HeadersContainer>
             <WhiteBox hasTransactions = {transactions.length}>
                 {

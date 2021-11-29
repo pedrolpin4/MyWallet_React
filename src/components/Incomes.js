@@ -58,14 +58,15 @@ const Incomes = () => {
         <LaunchingContainer>
             <LaunchingHeader>
                 <h1>New Income</h1>
-                <IoHomeSharp color = {"#fff"} size = {20} onClick = {() => history.push("/cash-flow")}/>
+                <IoHomeSharp color = {"#fff"} size = {20} className = "home"
+                    onClick = {() => history.push("/cash-flow")}/>
             </LaunchingHeader>
             <LaunchingForm onSubmit = {saveIncome}>
-                <CurrencyInput value = {value}  prefix = "$" disabled = {disabled}
+                <CurrencyInput value = {value}  prefix = "$" disabled = {disabled} className = "currency"
                     onChangeEvent = {e => setValue(e.target.value)}/>
                 <input placeholder = "Description" value = {description} disabled = {disabled}
                     onChange = {e => setDescription(e.target.value)}/>
-                <button disabled = {disabled}>Save Income</button>
+                <button disabled = {disabled} className = "save">Save Income</button>
             </LaunchingForm>
             <ErrorMessage>
                 {errorMessage}
