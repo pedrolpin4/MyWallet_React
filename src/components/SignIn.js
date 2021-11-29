@@ -67,7 +67,7 @@ const SignIn = () => {
                     onChange = {e => setEmail(e.target.value)}/>
                 <input placeholder = "Password" value = {password} disabled = {disabled}
                    type = "password" onChange = {e => setPassword(e.target.value)}/>
-                <button disabled = {disabled}>{disabled ?<Loading spinnerSize = {25} color = {"${({ theme: { colors } } ) => colors.secondary}"}/> : "Enter"}</button>
+                <button disabled = {disabled}>{disabled ?<Loading spinnerSize = {25} color = {"#fff"}/> : "Enter"}</button>
             </RegistrationForm>
             <ErrorMessage>
                 {errorMessage}
