@@ -17,6 +17,10 @@ const App = () => {
     
     useEffect(() => {
         const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+        const theme = localStorage.getItem("myWalletTheme");
+        if(theme){
+            setThemeType(theme)
+        }
         if(userLogin){
             setUserData(userLogin);
         }

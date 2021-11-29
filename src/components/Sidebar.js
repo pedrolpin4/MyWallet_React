@@ -25,7 +25,10 @@ const Sidebar = ({sidebar, logOut, setSidebar, setThemeType, themeType}) => {
                 <p>Welcome, {userData.name}</p>
                 <IoCloseOutline size = {25} onClick = {() => setSidebar(false)}/>    
             </NavMenuHeader>
-            <NavOption onClick = {() => setThemeType(prev => prev === 'light' ? 'dark' : 'light')}>
+            <NavOption onClick = {() => {
+                setThemeType(prev => prev === 'light' ? 'dark' : 'light');
+                localStorage.setItem("myWalletTheme", themeType === 'light' ? 'dark' : 'light')
+            }}>
                 { themeType === 'dark' ? <IoMoonSharp size = {20}/> : <IoSunnySharp size = {20}/> }
                 <p>Change your theme</p>
             </NavOption>
