@@ -1,6 +1,7 @@
-# My Wallet
+# My Wallet![MyWallet]
+
 <p align="center" >
- <img src = "https://user-images.githubusercontent.com/87671165/143816938-c41ec681-c979-4ef4-9031-ba6e5d4fc701.gif" height = "500px"/>
+ <img src = "https://user-images.githubusercontent.com/87671165/143910821-ba9a6a81-578b-46a0-86e3-355e0bb51072.gif" height = "500px"/>
 </p>
 
 ## About
