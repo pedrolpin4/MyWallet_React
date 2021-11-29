@@ -1,4 +1,4 @@
-# My Wallet![MyWallet]
+# My Wallet
 
 <p align="center" >
  <img src = "https://user-images.githubusercontent.com/87671165/143910821-ba9a6a81-578b-46a0-86e3-355e0bb51072.gif" height = "500px"/>
