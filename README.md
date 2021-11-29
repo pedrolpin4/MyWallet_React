@@ -6,7 +6,7 @@
 
 ## About
 
-Think about an ordinary movie theater, ok, now forget it! Cineflex is not an app for an ordinary movie theater, this platform is about a theater which only broadcasts the IMDB 50 top rated movies. If you are a cinefile that loves to watch movies your family thinks like: "what? this is from the 60's", this is the theater for you to go. Check the production version here: <a href = "https://cineflex-gamma.netlify.app">Click Me!!</a>
+Do you like registering your incomes and expenses in an old notebook? Well, I don't. If you're like me and likes to make things faster and less paperful, try this app: Oops, and it has a dark mode dessign that is beau ti ful. Try the production version here: <a href = "https://mywallet-gamma.netlify.app">Click Me!!</a>
 ## Resourses
 
 
@@ -32,8 +32,7 @@ Think about an ordinary movie theater, ok, now forget it! Cineflex is not an app
 
 ## What comes next?
 
-- On the next versions you'll be able to use a fake credit card, or a real one lol, to book your tickets;
-- As a user, you'll be able to see your booking history and navigate on the site through a sidebar;
+- On the next versions you'll be to edit and delete your records;
 
 ## Tecnologies I Used
 
@@ -43,6 +42,8 @@ Think about an ordinary movie theater, ok, now forget it! Cineflex is not an app
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![StyledComponents](https://img.shields.io/badge/Styled--Components-DB7093?style=flat-square&logo=styled-components&logoColor=white)
+![Cypress](https://img.shields.io/badge/Cypress-182534?style=flat-square)
 
 #### **Back-end**
 
