@@ -45,13 +45,26 @@ const LaunchingContainer = styled.div`
     }
 `
 
-const LaunchingHeader = styled.h1`
-    font-weight: bold;
-    margin-bottom: 40px;
-    font-size: 26px;
-    line-height: 31px;
-    color: ${({ theme: { colors } } ) => colors.secondary};
-    animation: moveInRight .5s ease-in-out;
+const LaunchingHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    h1 {
+        font-weight: bold;
+        margin-bottom: 40px;
+        font-size: 26px;
+        line-height: 31px;
+        color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
+        animation: moveInRight .5s ease-in-out;
+    }
+
+    svg {
+        cursor: pointer;
+        position: relative;
+        margin-top: 5px;
+        animation: moveInRight .5s ease-in-out;
+    }
 `
 
 const LaunchingForm = styled.form`
@@ -66,7 +79,7 @@ const LaunchingForm = styled.form`
         height: 58px;
         background: ${ ( { theme: {colors} } ) => colors.primary };
         border-radius: 5px;
-        color: ${({ theme: { colors } } ) => colors.secondary};
+        color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
         font-size: 20px;
         line-height: 23px;
         margin-bottom: 18px;
@@ -84,22 +97,6 @@ const LaunchingForm = styled.form`
     }
 `
 
-const CancelButton = styled.div`
-    align-self: center;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 18px;
-    color: ${({ theme: { colors } } ) => colors.secondary};
-    &:hover{
-        transform: translateY(-3px);
-        text-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.3);
-        }
-    &:active{
-        transform: translateY(-1px);
-        text-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
-    }
-`
-
 const ErrorMessage = styled.p`
     font-family: Raleway;
     align-self: center;
@@ -108,7 +105,7 @@ const ErrorMessage = styled.p`
     margin-bottom: 13px;
     color: crimson;
     font-weight: 700;
-
+    animation: moveInRight .5s ease-in-out;
 `
 
 
@@ -118,7 +115,6 @@ const IncomesExpenses = {
     LaunchingHeader,
     LaunchingContainer,
     LaunchingForm,
-    CancelButton,
     ErrorMessage
 }
 

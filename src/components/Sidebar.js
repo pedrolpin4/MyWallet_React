@@ -43,7 +43,7 @@ const NavOverlay = styled.div`
 
 const NavMenu = styled.div`
     background-color: ${({ theme: { colors } } ) => colors.primaryDark };
-    color: ${({ theme: { colors } } ) => colors.secondary};
+    color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
     width: 350px;
     height: calc(100vh - 10px);
     display: flex;
@@ -58,13 +58,12 @@ const NavMenu = styled.div`
     z-index: 5;
 `
 
-
 const NavMenuHeader = styled.div`
     width: 350px;
     height: 50px;
     font-size: 18px;
     padding: 15px;
-    border-bottom: 1px solid rgba(200, 200, 200, 0.2);
+    border-bottom: 1px solid ${({ theme: { colors } } ) => colors.inputs === '#fff' ? 'rgba(256, 256, 256, 0.5)' : 'rgba(200, 200, 200, 0.5)'};;
     display: flex;
     align-items: center;
     justify-content: space-between;

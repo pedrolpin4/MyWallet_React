@@ -5,6 +5,7 @@ const light = {
     primary: "#A328D6",
     primaryDark: "#8C11BE",
     secondary: "#FFF",
+    secondaryAdaptable: "#FFF",
     secondaryDark: "#868686",
     terciary: "#03AC00",
     quarternary: '#C70000',
@@ -14,13 +15,14 @@ const light = {
 
 const dark = {
     colors: {
-        primary: "#A328D6",
-        primaryDark: "#8C11BE",
-        secondary: "#FFF",
-        secondaryDark: "#868686",
-        terciary: "#03AC00",
-        quarternary: '#C70000',
-        inputs: "#000",
+        primary: "#333",
+        primaryDark: "#000",
+        secondary: "#333",
+        secondaryAdaptable: "#fff",
+        secondaryDark: "#bbb",
+        terciary: "#02FF09",
+        quarternary: '#FF2B20',
+        inputs: "#fff",
     },
 }
 

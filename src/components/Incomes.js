@@ -1,17 +1,17 @@
 import { useContext, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import IncomesExpenses from "../styles/IncomesExpenses";
 import validations from "../validation/JoiValidations";
 import CurrencyInput from "react-currency-input"
 import financialRecords from "../service/financialRecords";
+import {IoHomeSharp} from 'react-icons/io5'
 
 const Incomes = () => {
     const {
         LaunchingHeader,
         LaunchingContainer,
         LaunchingForm,
-        CancelButton,
         ErrorMessage
     } = IncomesExpenses;
     
@@ -57,7 +57,8 @@ const Incomes = () => {
     return(
         <LaunchingContainer>
             <LaunchingHeader>
-                New Income
+                <h1>New Income</h1>
+                <IoHomeSharp color = {"#fff"} size = {20} onClick = {() => history.push("/cash-flow")}/>
             </LaunchingHeader>
             <LaunchingForm onSubmit = {saveIncome}>
                 <CurrencyInput value = {value}  prefix = "$" disabled = {disabled}
@@ -69,11 +70,6 @@ const Incomes = () => {
             <ErrorMessage>
                 {errorMessage}
             </ErrorMessage>
-            <Link to = {"/cash-flow"}>
-                <CancelButton>
-                    Cancel Income
-                </CancelButton>
-            </Link>
         </LaunchingContainer>
     )
 }

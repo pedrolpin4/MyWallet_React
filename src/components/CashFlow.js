@@ -138,7 +138,7 @@ const HelloMessage = styled.h1`
     font-weight: bold;
     font-size: 26px;
     line-height: 31px;
-    color: ${({ theme: { colors } } ) => colors.secondary};
+    color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
 ` 
 
 const HeadersContainer = styled.div`
@@ -150,7 +150,7 @@ const HeadersContainer = styled.div`
 
     svg{
         cursor: pointer;
-        color: ${({ theme: { colors } } ) => colors.secondary};
+        color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
         &:hover{
             transform: translateY(-1px);
         }
@@ -263,16 +263,17 @@ const RegisterBox = styled.div`
     border-radius: 5px;
     transition: all .15s ease-in-out;
     svg{
-        color: ${({ theme: { colors } } ) => colors.secondary};
+        color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
     }
 
     &:hover{
         transform: translateY(-3px);
-        box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.3);
+        box-shadow: 2px  2px 1px ${({ theme: { colors } } ) => colors.inputs === '#fff' ? 'rgba(256, 256, 256, 0.5)' : 'rgba(0, 0, 0, 0.3)'};
     }
     &:active{
         transform: translateY(-1px);
-        box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px  1px .5px ${({ theme: { colors } } ) => colors.inputs === '#fff' ? 'rgba(256, 256, 256, 0.5)' : 'rgba(0, 0, 0, 0.3)'};
+;
     }
 `
 
@@ -288,7 +289,7 @@ const RegisterMessage = styled.p`
     font-weight: bold;
     font-size: 17px;
     line-height: 20px;
-    color: ${({ theme: { colors } } ) => colors.secondary};
+    color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
 `
 
 export default CashFlow
