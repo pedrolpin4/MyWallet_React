@@ -17,27 +17,28 @@ const App = () => {
     
     useEffect(() => {
         const userLogin = JSON.parse(localStorage.getItem("userLogin"));
-        console.log(process.env.NODE_ENV);
         if(userLogin){
             setUserData(userLogin);
         }
     }, []);
     
     return(
-    <UserContext.Provider value={{userData,setUserData}}>
-        <Theme type = {themeType}>
-            <Router>
-                <GlobalStyles />
-                <Switch>
-                    <Route exact path = "/" component = {SignIn} />
-                    <Route exact path="/sign-up" component={SignUp} />
-                    <Route exact path = "/cash-flow" component = {CashFlow} setThemeType = {setThemeType}/>
-                    <Route exact path = "/incomes" component = {Incomes} />
-                    <Route exact path = "/expenses" component = {Expenses} />
-                </Switch>
-            </Router>
-        </Theme>
-    </UserContext.Provider>  
+        <UserContext.Provider value={{userData,setUserData}}>
+            <Theme type = {themeType}>
+                <Router>
+                    <GlobalStyles />
+                    <Switch>
+                        <Route exact path = "/" component = {SignIn} />
+                        <Route exact path="/sign-up" component={SignUp} />
+                        <Route exact path = "/cash-flow">
+                            <CashFlow setThemeType = {setThemeType} themeType = {themeType}/>
+                        </Route>
+                        <Route exact path = "/incomes" component = {Incomes} />
+                        <Route exact path = "/expenses" component = {Expenses} />
+                    </Switch>
+                </Router>
+            </Theme>
+        </UserContext.Provider>  
     )
 }
 

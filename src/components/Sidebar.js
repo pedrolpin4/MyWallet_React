@@ -1,9 +1,9 @@
 import { useContext, useRef } from "react";
-import { IoExitOutline } from "react-icons/io5";
+import { IoExitOutline, IoMoonSharp, IoPencilSharp, IoSunnySharp, IoTrash } from "react-icons/io5";
 import UserContext from "../context/UserContext"
 import styled from "styled-components";
 
-const Sidebar = ({sidebar, logOut, setSidebar}) => {
+const Sidebar = ({sidebar, logOut, setSidebar, setThemeType, themeType}) => {
     const {
         userData
     } = useContext(UserContext)
@@ -19,13 +19,24 @@ const Sidebar = ({sidebar, logOut, setSidebar}) => {
     return(
         <>
         <NavOverlay sidebar = {sidebar} onClick = {closeModal} ref = {sidebarRef}>
-
         </NavOverlay>
         <NavMenu sidebar = {sidebar}>
             <NavMenuHeader>
                 <p>Welcome, {userData.name}</p>
                 <IoExitOutline size = {20} onClick = {logOut}/>    
             </NavMenuHeader>
+            <NavOption onClick = {() => setThemeType(prev => prev === 'light' ? 'dark' : 'light')}>
+                { themeType === 'dark' ? <IoMoonSharp size = {20}/> : <IoSunnySharp size = {20}/> }
+                <p>Change your theme</p>
+            </NavOption>
+            <NavOption onClick = {() => null}>
+                <IoPencilSharp size = {20} />
+                <p>Edit your records</p>
+            </NavOption>
+            <NavOption onClick = {() => null}>
+                <IoTrash size = {20} />
+                <p>Delete your records</p>
+            </NavOption>
         </NavMenu>
         </>
     )
@@ -67,6 +78,19 @@ const NavMenuHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+`
+
+const NavOption = styled.div `
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: flex-start;
+
+    svg{
+        margin-right: 15px;
+    }
 `
 
 export default Sidebar;

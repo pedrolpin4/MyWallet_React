@@ -9,15 +9,15 @@ import UserContext from "../context/UserContext"
 import financialRecords from "../service/financialRecords";
 import Sidebar from "./Sidebar";
 
-const CashFlow = () => {
+const CashFlow = ({setThemeType, themeType}) => {
     const history = useHistory();
     const { userData, setUserData } = useContext(UserContext);
     const [transactions, setTransactions] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
-    const [sidebar, setSidebar] = useState(false)
+    const [sidebar, setSidebar] = useState(false);
 
     if(!localStorage.getItem("userLogin")){
-        history.push("/")
+        history.push("/");
     }
 
     const logOut = () => {
@@ -50,7 +50,8 @@ const CashFlow = () => {
 
     return(
         <CashFlowContainer>
-            <Sidebar sidebar = {sidebar} setSidebar = {setSidebar} logOut = {logOut}/>
+            <Sidebar sidebar = {sidebar} setSidebar = {setSidebar} 
+                logOut = {logOut} setThemeType = {setThemeType} themeType = {themeType}/>
             <HeadersContainer> 
                 <HelloMessage>
                     Hello, {userData.name}
@@ -75,7 +76,11 @@ const CashFlow = () => {
                                             <TransactionValue 
                                                 className = {Number(t.value) < 0 ? "red" : "green"}
                                             >
-                                                {`$${Number(Math.abs(t.value)).toFixed(2)}`}
+                                                {
+                                                    Number(t.value) < 0 ?
+                                                    `- $${Number(Math.abs(t.value)).toFixed(2)}`:
+                                                    `+ $${Number(Math.abs(t.value)).toFixed(2)}` 
+                                                }
                                             </TransactionValue>
                                         </TransactionBox>
                                 )})} 
@@ -87,7 +92,11 @@ const CashFlow = () => {
                                 <BalanceValue
                                     className = {sumTransactions() < 0 ? "red" : "green"}
                                 >
-                                    {`$${Math.abs(sumTransactions()).toFixed(2)}`}
+                                    { 
+                                        sumTransactions() < 0 ?
+                                        `- ${`$${Math.abs(sumTransactions()).toFixed(2)}`}`:
+                                        `+ ${`$${Math.abs(sumTransactions()).toFixed(2)}`}`
+                                    }
                                 </BalanceValue>
                             </BalanceBox>
                         </>
@@ -211,7 +220,7 @@ const TransactionDate = styled.div`
 `
 
 const TransactionDescription = styled.div`
-    width: calc(100vw - 230px);
+    width: calc(100vw - 250px);
     text-align: start;
     overflow-x: hidden;
     font-size: 16px;
@@ -220,7 +229,7 @@ const TransactionDescription = styled.div`
 `
 
 const TransactionValue = styled.div`
-    width: 70px;
+    width: 100px;
     font-size: 16px;
     line-height: 19px;
     text-align: end;
