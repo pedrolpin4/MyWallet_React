@@ -110,7 +110,7 @@ const CashFlow = ({setThemeType, themeType}) => {
                 <Link to = {"/incomes"}>
                     <RegisterBox>
                         <FiPlusCircle size = {25}/>
-                        <RegisterMessage> 
+                        <RegisterMessage className = "income"> 
                             New Income 
                         </RegisterMessage>
                     </RegisterBox>
@@ -118,7 +118,7 @@ const CashFlow = ({setThemeType, themeType}) => {
                 <Link to = {"/expenses"}>
                     <RegisterBox>
                         <FiMinusCircle size = {25}/>
-                        <RegisterMessage> 
+                        <RegisterMessage className = "expense"> 
                             New Expense
                         </RegisterMessage>
                     </RegisterBox>

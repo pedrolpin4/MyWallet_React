@@ -67,13 +67,13 @@ const SignIn = () => {
                     onChange = {e => setEmail(e.target.value)}/>
                 <input placeholder = "Password" value = {password} disabled = {disabled}
                    type = "password" onChange = {e => setPassword(e.target.value)}/>
-                <button disabled = {disabled}>{disabled ?<Loading spinnerSize = {25} color = {"#fff"}/> : "Enter"}</button>
+                <button className = "login" disabled = {disabled}>{disabled ?<Loading spinnerSize = {25} color = {"#fff"}/> : "Enter"}</button>
             </RegistrationForm>
             <ErrorMessage>
                 {errorMessage}
             </ErrorMessage>
             <Link to = {"/sign-up"}> 
-                <PageTransitionMessage>
+                <PageTransitionMessage className = "toggler">
                     First time on MyWallet? Sign-up now!
                 </PageTransitionMessage>
             </Link>

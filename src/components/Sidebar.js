@@ -1,5 +1,5 @@
 import { useContext, useRef } from "react";
-import { IoExitOutline, IoMoonSharp, IoPencilSharp, IoSunnySharp, IoTrash } from "react-icons/io5";
+import { IoCloseOutline, IoMoonSharp, IoPencilSharp, IoSunnySharp, IoTrash } from "react-icons/io5";
 import UserContext from "../context/UserContext"
 import styled from "styled-components";
 
@@ -23,7 +23,7 @@ const Sidebar = ({sidebar, logOut, setSidebar, setThemeType, themeType}) => {
         <NavMenu sidebar = {sidebar}>
             <NavMenuHeader>
                 <p>Welcome, {userData.name}</p>
-                <IoExitOutline size = {20} onClick = {logOut}/>    
+                <IoCloseOutline size = {25} onClick = {() => setSidebar(false)}/>    
             </NavMenuHeader>
             <NavOption onClick = {() => setThemeType(prev => prev === 'light' ? 'dark' : 'light')}>
                 { themeType === 'dark' ? <IoMoonSharp size = {20}/> : <IoSunnySharp size = {20}/> }
@@ -37,6 +37,9 @@ const Sidebar = ({sidebar, logOut, setSidebar, setThemeType, themeType}) => {
                 <IoTrash size = {20} />
                 <p>Delete your records</p>
             </NavOption>
+            <LogoutButton onClick = {logOut}>
+                LOGOUT
+            </LogoutButton>
         </NavMenu>
         </>
     )
@@ -67,6 +70,10 @@ const NavMenu = styled.div`
     overflow-y: scroll;
     overflow-x: hidden;
     z-index: 5;
+
+    @media(max-width: 500px) {
+        width: 280px;
+    }
 `
 
 const NavMenuHeader = styled.div`
@@ -78,6 +85,14 @@ const NavMenuHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    svg{
+        cursor: pointer;
+    }
+
+    @media(max-width: 500px) {
+        width: 280px;
+    }
 `
 
 const NavOption = styled.div `
@@ -90,6 +105,27 @@ const NavOption = styled.div `
 
     svg{
         margin-right: 15px;
+    }
+`
+
+const LogoutButton = styled.div `
+    cursor: pointer;
+    position: absolute;
+    left: 10%;
+    bottom: 80px;
+    width: 80%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    transition: all .5s;
+    border: .7px solid #fff;
+    font-size: 16px;
+
+    &:hover{
+        background-color: #ddd;
+        color: #333;
     }
 `
 

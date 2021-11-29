@@ -54,7 +54,7 @@ const RegistrationForm = styled.form`
         height: 58px;
         background: ${ ( { theme: {colors} } ) => colors.primary };
         border-radius: 5px;
-        color: ${({ theme: { colors } } ) => colors.inputs};
+        color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
         font-size: 20px;
         line-height: 23px;
         margin-bottom: 32px;
@@ -94,12 +94,13 @@ const PageTransitionMessage = styled.p`
 ` 
 const ErrorMessage = styled.p`
     font-family: Raleway;
+    align-self: center;
     font-size: 15px;
     line-height: 18px;
     margin-bottom: 13px;
     color: crimson;
     font-weight: 700;
-
+    animation: moveInRight .5s ease-in-out;
 `
 
 const UserRegistration = {

@@ -71,13 +71,13 @@ const SignUp = () => {
                     type = "password" onChange = {e => setPassword(e.target.value)}/>
                 <input placeholder = "Confirm your password" value = {repeatPassword} 
                     type = "password" onChange = {e => setrepeatPassword(e.target.value)} disabled = {disabled}/>
-                <button disabled = {disabled}>{disabled ?<Loading spinnerSize = {25} color = {"#fff"}/> : "Register"}</button>
+                <button className = "register" disabled = {disabled}>{disabled ?<Loading spinnerSize = {25} color = {"#fff"}/> : "Register"}</button>
             </RegistrationForm>
             <ErrorMessage>
                 {errorMessage}
             </ErrorMessage>
             <Link to = {"/"}> 
-                <PageTransitionMessage>
+                <PageTransitionMessage className = "toggler">
                     Already have an account? Enter now!                   
                 </PageTransitionMessage>
             </Link>

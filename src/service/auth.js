@@ -45,7 +45,7 @@ const postSignIn = async (forms) => {
 
             if(e.response.status === 404) return{
                 success: false,
-                message: "Looks like this email is not on our database, click below to sign-up"
+                message: "You are not registered, click below to sign-up"
             }
         }
 
