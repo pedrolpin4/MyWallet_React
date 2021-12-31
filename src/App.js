@@ -1,19 +1,28 @@
 import { BrowserRouter as Router,
         Switch,
-        Route } from "react-router-dom";
+        Route,
+        useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserContext from "./context/UserContext";
 import GlobalStyles from "./styles/GlobalStyles";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import CashFlow from "./components/CashFlow";
-import Incomes from "./components/Incomes";
-import Expenses from "./components/Expenses";
 import Theme from "./styles/Theme";
+import Dashboard from "./components/Dashboard";
+import Register from "./components/Register";
 
 const App = () => {
     const [userData, setUserData] = useState({});
-    const [themeType, setThemeType] = useState('dark')
+    const [themeType, setThemeType] = useState('dark');
+    const history = useHistory();
+
+
+    const logOut = () => {
+        localStorage.removeItem("userLogin");
+        setUserData({});
+        history.push("/");
+    }
     
     useEffect(() => {
         const userLogin = JSON.parse(localStorage.getItem("userLogin"));
@@ -35,10 +44,12 @@ const App = () => {
                         <Route exact path = "/" component = {SignIn} />
                         <Route exact path="/sign-up" component={SignUp} />
                         <Route exact path = "/cash-flow">
-                            <CashFlow setThemeType = {setThemeType} themeType = {themeType}/>
+                            <CashFlow setThemeType = {setThemeType} themeType = {themeType} logOut = {logOut}/>
                         </Route>
-                        <Route exact path = "/incomes" component = {Incomes} />
-                        <Route exact path = "/expenses" component = {Expenses} />
+                        <Route exact path = "/register" component = {Register} />
+                        <Route exact path = "/home">
+                            <Dashboard setThemeType = {setThemeType} themeType = {themeType} logOut = {logOut}/>
+                        </Route>
                     </Switch>
                 </Router>
             </Theme>

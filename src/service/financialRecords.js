@@ -68,12 +68,15 @@ const postTransaction = async (forms, token, type) => {
 }
 
 const postIncomes = async (forms, token) => {
-   const result = await postTransaction(forms, token, "incomes")
+   console.log(forms);
+   const { value, description } = forms
+   const result = await postTransaction({value, description}, token, "incomes")
    return result;
 }
 
 const postExpenses = async (forms, token) => {
-   const result = await postTransaction(forms, token, "expenses")
+   const { value, description } = forms
+   const result = await postTransaction({value, description}, token, "expenses")
    return result;
 }
 

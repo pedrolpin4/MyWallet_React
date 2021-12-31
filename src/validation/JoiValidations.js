@@ -14,7 +14,9 @@ const signIn = Joi.object({
 
 const IncomesExpenses = Joi.object({
     value: Joi.number().positive().greater(0).max(10000).required(),
-    description: Joi.string().min(2).max(40).required()
+    description: Joi.string().min(2).max(40).required(),
+    type: Joi.string().required(),
+    category: Joi.string().required(),
 })
 
 const validations = {

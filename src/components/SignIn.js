@@ -24,7 +24,7 @@ const SignIn = () => {
 
     useEffect(() => {
         if(userData.token) {
-          history.push("/cash-flow")
+          history.push("/home")
         }
     }, [userData, history]);
     
@@ -52,7 +52,7 @@ const SignIn = () => {
         if(result.success){
             setUserData({...result.data});
             localStorage.setItem("userLogin", JSON.stringify({...result.data}));
-            history.push("/cash-flow");      
+            history.push("/home");      
             return;
         }
 
