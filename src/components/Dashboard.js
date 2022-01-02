@@ -85,8 +85,8 @@ const DashBoard = ({setThemeType, themeType, logOut}) => {
                 >
                     { visibility ? 
                         sumTransactions() < 0 ?
-                        `+${`$${Math.abs(sumTransactions()).toFixed(2)}`}`:
-                        `-${`$${Math.abs(sumTransactions()).toFixed(2)}`}`
+                        `-${`$${Math.abs(sumTransactions()).toFixed(2)}`}`:
+                        `+${`$${Math.abs(sumTransactions()).toFixed(2)}`}`
                         : `???`
                     }
                 </BalanceValue>
@@ -209,7 +209,8 @@ const DashBoard = ({setThemeType, themeType, logOut}) => {
                                 legend: {
                                     position: "right",
                                     labels: {
-                                        boxWidth: 20,
+                                        boxWidth: 10,
+                                        boxHeight: 10,
                                     }
                                 },
                             },

@@ -1,4 +1,5 @@
-import { useContext, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect, useState } from "react";
 import {  useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import IncomesExpenses from "../styles/IncomesExpenses";
@@ -7,6 +8,7 @@ import CurrencyInput from "react-currency-input"
 import financialRecords from "../service/financialRecords";
 import {IoHomeSharp} from 'react-icons/io5'
 import Options from "./Options";
+import categoriesServices from "../service/categories";
 
 const Register = () => {
     const {
@@ -21,29 +23,12 @@ const Register = () => {
     const { userData } = useContext(UserContext)
     const [value, setValue] = useState("");
     const [ isVisible, setIsVisible ] = useState(false);
-    const [type, setType] = useState('');
+    const [type, setType] = useState('income');
+    const [ categories, setCategories ] = useState([]);
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState("");
     const [disabled, setDisabled] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const categories = [
-        {
-            id: 0, 
-            name: 'Food'
-        },{
-            id: 1, 
-            name: 'Rent'
-        },{
-            id: 2, 
-            name: 'Health Care'
-        },{
-            id: 3, 
-            name: 'Taxes'
-        },{
-            id: 4, 
-            name: 'Fun'
-        }
-    ];
 
     if(!localStorage.getItem("userLogin")){
         history.push("/")
@@ -55,7 +40,7 @@ const Register = () => {
             value: Number(value.replace("$", "").replace(",", "")),
             description,
             type,
-            category: category.name,
+            categoryId: category.id,
         }
         setDisabled(true);
 
@@ -80,7 +65,6 @@ const Register = () => {
         if(result.success){
             setDisabled(false);
             setValue('');
-            setType('');
             setCategory('');
             setDescription('');
             setErrorMessage(`Your ${ Number(value.replace("$", "").replace(",", ""))} dolars transaction was successfully registered`)
@@ -91,6 +75,19 @@ const Register = () => {
         setErrorMessage(result.message)
         return;
     }
+
+    const getCategories = async () => {
+        const result = await categoriesServices.getCategoriesByType(type);
+        console.log(result);
+        if(result.success) {
+            setCategories(result.data);
+            return;
+        }
+
+        setCategories(result.message);
+    }
+
+    useEffect(() => getCategories(), [type])
 
     return(
         <LaunchingContainer>
@@ -113,7 +110,7 @@ const Register = () => {
                             setCategory('')
                         }
                     }}>
-                        <input type="radio" class="radio-input" id="small" name="size" />
+                        <input type="radio" class="radio-input" id="small" name="size" defaultChecked/>
                         <label for="small" class="radio-label">
                             <span class="radio-button"></span>
                             Income
