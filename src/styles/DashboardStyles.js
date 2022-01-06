@@ -17,6 +17,14 @@ const MetricsHolder = styled.div`
     flex-shrink: 1;
 `
 
+const Card = styled.div`
+    border: 1px solid ${({ theme: { colors } } ) => colors.secondaryAdaptable};
+    margin-top: ${props => `${props.mt}px`};
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 5px;
+`
+
 const MetricsComponent = styled.div`
     display: flex;
     width: 100%;
@@ -90,4 +98,5 @@ export {
     MetricsHolder,
     ChartHolder,
     DashboardTitle,
+    Card,
 }
