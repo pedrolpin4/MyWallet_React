@@ -68,7 +68,6 @@ const postTransaction = async (forms, token, type) => {
 }
 
 const postIncomes = async (forms, token) => {
-   console.log(forms);
    const { value, description, categoryId } = forms
    const result = await postTransaction({value, description, categoryId}, token, "incomes")
    return result;

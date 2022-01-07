@@ -9,13 +9,13 @@ import financialRecords from "../service/financialRecords";
 import {IoHomeSharp} from 'react-icons/io5'
 import Options from "./Options";
 import categoriesServices from "../service/categories";
+import { toast } from "react-toastify";
 
 const Register = () => {
     const {
         LaunchingHeader,
         LaunchingContainer,
         LaunchingForm,
-        ErrorMessage,
         SeeMore,
     } = IncomesExpenses;
     
@@ -28,7 +28,6 @@ const Register = () => {
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState("");
     const [disabled, setDisabled] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
 
     if(!localStorage.getItem("userLogin")){
         history.push("/")
@@ -47,7 +46,12 @@ const Register = () => {
         const RegisterValidator = validations.IncomesExpenses
 
         if(RegisterValidator.validate(forms).error){
-            setErrorMessage(RegisterValidator.validate(forms).error.details[0].message);
+            toast.error(RegisterValidator.validate(forms)
+                .error.details[0].message
+                .replace('"description"', 'Description')
+                .replace('"value"', 'Value')
+                .replace('"categoryId"', 'Category')
+            );
             setDisabled(false);
             return;
         }
@@ -67,18 +71,17 @@ const Register = () => {
             setValue('');
             setCategory('');
             setDescription('');
-            setErrorMessage(`Your ${ Number(value.replace("$", "").replace(",", ""))} dolars transaction was successfully registered`)
+            toast.success(` Your transaction was successfully registered`);
             return;
         }
 
         setDisabled(false);
-        setErrorMessage(result.message)
+        toast.error(result.message);
         return;
     }
 
     const getCategories = async () => {
         const result = await categoriesServices.getCategoriesByType(type);
-        console.log(result);
         if(result.success) {
             setCategories(result.data);
             return;
@@ -131,9 +134,6 @@ const Register = () => {
                 </div>
                 <SeeMore disabled = {disabled} className = "save">Save Register</SeeMore>
             </LaunchingForm>
-            <ErrorMessage valid = {errorMessage.includes('dolars')}>
-                {errorMessage}
-            </ErrorMessage>
         </LaunchingContainer>
     )
 }

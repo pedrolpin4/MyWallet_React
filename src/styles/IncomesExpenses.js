@@ -128,17 +128,6 @@ const LaunchingForm = styled.form`
     }
 `
 
-const ErrorMessage = styled.p`
-    font-family: Raleway;
-    align-self: center;
-    text-align: center;
-    font-size: 15px;
-    line-height: 18px;
-    margin-bottom: 13px;
-    color: ${props => props.valid ?  ({ theme: { colors } } ) => colors.terciary : ({ theme: { colors } } ) => colors.quarternary};
-    font-weight: 700;
-`
-
 const SeeMore = styled.button`
     font-family: Raleway;
     position: relative;
@@ -188,7 +177,6 @@ const IncomesExpenses = {
     LaunchingHeader,
     LaunchingContainer,
     LaunchingForm,
-    ErrorMessage,
     SeeMore,
 }
 

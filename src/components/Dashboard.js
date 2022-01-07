@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { useContext, useEffect, useState } from "react"
 import { IoMenuOutline } from  "react-icons/io5";
 import { useHistory } from "react-router";
-import { DashboardTitle, ChartHolder, MetricsComponent, MetricsHolder, MetricsValue, Card } from "../styles/DashboardStyles";
+import { DashboardTitle, ChartHolder, MetricsComponent, MetricsHolder, MetricsValue } from "../styles/DashboardStyles";
 import { Doughnut } from "react-chartjs-2";
 import { Chart, registerables } from 'chart.js';
 import styled from "styled-components"
@@ -14,11 +14,13 @@ import UserContext from "../context/UserContext";
 import { BsGraphDown, BsGraphUp } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import categoriesServices from "../service/categories";
+import Loading from "../assets/Loading";
 
-const DashBoard = ({setThemeType, themeType, logOut}) => {
+const DashBoard = ({setThemeType, themeType}) => {
     const history = useHistory();
     Chart.register(...registerables);
     const { userData } = useContext(UserContext);
+    const [ isLoading, setIsLoading ] = useState(true)
     const [incomeCategories, setIncomeCategories] = useState([]);
     const [expenseCategories, setExpenseCategories] = useState([])
     const [transactions, setTransactions] = useState([]);
@@ -55,17 +57,18 @@ const DashBoard = ({setThemeType, themeType, logOut}) => {
     const categoriesStats = async (token, type) => {
         const result = await categoriesServices.getCategoryStatsByType(token, type);
         if(result.data && type === 'income'){
-            console.log(result.data);
+            setIsLoading(false)
             setIncomeCategories(result.data);
             return;
         }
 
         if(result.data) {
-            console.log(result.data);
+            setIsLoading(false)
             setExpenseCategories(result.data);
             return;
         }
 
+        setIsLoading(false)
         setErrorMessage(result.message);
         return;
     };
@@ -91,208 +94,215 @@ const DashBoard = ({setThemeType, themeType, logOut}) => {
     return(
         <CashFlowContainer>
             <Sidebar sidebar = {sidebar} setSidebar = {setSidebar} 
-                logOut = {logOut} setThemeType = {setThemeType} themeType = {themeType}/>
+              setThemeType = {setThemeType} themeType = {themeType}/>
             <HeadersContainer> 
                 <HelloMessage>
                     Hello, {userData.name}
                 </HelloMessage>
                 <IoMenuOutline size = {30} className = "menu" onClick = {() => setSidebar(true)}/>
             </HeadersContainer>
-                <BalanceBox>
-                    <BalanceText>
-                        <p>Balance</p>  
+            {
+                isLoading ? 
+                <Loading spinnerSize={70} color={"#fff"}/> :
+                <>
+                    <BalanceBox>
+                        <BalanceText>
+                            <p>Balance</p>  
+                            {
+                                visibility ? 
+                                    <AiOutlineEye size = {30} onClick={() => setVisibility(false)}/> :
+                                    <AiOutlineEyeInvisible  size = {30} onClick={() => setVisibility(true)}/>}
+                        </BalanceText>
+                        <BalanceValue
+                            className = {visibility ? sumTransactions() < 0 ? "red" : "green" : 'white'}
+                        >
+                            { visibility ? 
+                                sumTransactions() < 0 ?
+                                `-${`$${Math.abs(sumTransactions()).toFixed(2)}`}`:
+                                `+${`$${Math.abs(sumTransactions()).toFixed(2)}`}`
+                                : `???`
+                            }
+                        </BalanceValue>
+                    </BalanceBox>
+                    <DashboardTitle>
+                        Metrics
+                    </DashboardTitle>
+                    <MetricsHolder>
+                        <MetricsComponent >
+                            <div>
+                                <BsGraphUp size = {30} />
+                                <p>Incomes</p>
+                            </div>
+                            <MetricsValue className="green">
+                            { visibility ? 
+                            `+$${sumTransactions('incomes').toFixed(2)}` :
+                                '???'
+                            }
+                            </MetricsValue>
+                        </MetricsComponent>
+                        <MetricsComponent >
+                            <div>
+                                <BsGraphDown size = {30} />
+                                <p>Expenses</p>   
+                            </div>
+                            <MetricsValue className="red">
+                            { visibility ? 
+                            `-$${sumTransactions('expenses').toFixed(2)}` :
+                                '???'
+                            }                
+                            </MetricsValue>
+                        </MetricsComponent>
+                    </MetricsHolder>
+                    <DashboardTitle>
+                        Expenses by Category
+                    </DashboardTitle>
+                    <ChartHolder>
+                        <Doughnut 
+                            height={300}
+                            width={500}
+                            data = {{
+                                    labels: expenseCategories.map(expense => expense.name),
+                                    datasets: [{
+                                        label: 'Number of Votes',
+                                        data: expenseCategories.map(expense => expense.sum),
+                                        backgroundColor: [
+                                                'rgba(255, 99, 132, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(75, 192, 192, 0.2)',
+                                                'rgba(153, 102, 255, 0.2)',
+                                                'rgba(255, 159, 64, 0.2)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(255, 99, 132, 1)',
+                                                'rgba(54, 162, 235, 1)',
+                                                'rgba(255, 206, 86, 1)',
+                                                'rgba(75, 192, 192, 1)',
+                                                'rgba(153, 102, 255, 1)',
+                                                'rgba(255, 159, 64, 1)'
+                                            ],
+                                            borderWidth: 1
+                                    }]
+                                }}
+                                options={{
+                                    maintainAspectRatio: false,
+                                    aspectRatio: 1,
+                                    plugins: {
+                                        legend: {
+                                            position: "right",
+                                            labels: {
+                                                boxWidth: 10,
+                                                boxHeight: 10,
+                                            }
+                                        },
+                                    },
+                                    scales: {
+                                        y:{
+                                            grid: {
+                                                display: false,
+                                            },
+                                            ticks:{
+                                                display: false,
+                                            },
+                                            beginAtZero: true
+                                        },
+                                    },
+                            }}
+                        />
+                    </ChartHolder>
+                    <DashboardTitle>
+                        Incomes by Category
+                    </DashboardTitle>
+                    <ChartHolder>
+                        <Doughnut 
+                            height={300}
+                            width={500}
+                            data = {{
+                                    labels: incomeCategories.map(income => income.name),
+                                    datasets: [{
+                                        label: 'Number of Votes',
+                                        data: incomeCategories.map(income => income.sum),
+                                        backgroundColor: [
+                                                'rgba(255, 102, 250, 0.2)',
+                                                'rgba(23, 130, 255, 0.2)',
+                                                'rgba(105, 206, 106, 0.2)',
+                                            ],
+                                            borderColor: [
+                                                'rgba(255, 102, 250, 1)',
+                                                'rgba(23, 130, 255, 1)',
+                                                'rgba(105, 206, 106, 1)',
+                                            ],
+                                            borderWidth: 1
+                                    }]
+                                }}
+                                options={{
+                                    maintainAspectRatio: false,
+                                    aspectRatio: 1,
+                                    plugins: {
+                                        legend: {
+                                            position: "right",
+                                            labels: {
+                                                boxWidth: 10,
+                                                boxHeight: 10,
+                                            }
+                                        },
+                                    },
+                                    scales: {
+                                        y:{
+                                            grid: {
+                                                display: false,
+                                            },
+                                            ticks:{
+                                                display: false,
+                                            },
+                                            beginAtZero: true
+                                        },
+                                    },
+                            }}
+                        />
+                    </ChartHolder>
+                    <DashboardTitle>
+                        Last Transactions
+                    </DashboardTitle>
+                    <WhiteBox hasTransactions = {transactions.length}>
                         {
-                            visibility ? 
-                                <AiOutlineEye size = {30} onClick={() => setVisibility(false)}/> :
-                                <AiOutlineEyeInvisible  size = {30} onClick={() => setVisibility(true)}/>}
-                    </BalanceText>
-                    <BalanceValue
-                        className = {visibility ? sumTransactions() < 0 ? "red" : "green" : 'white'}
-                    >
-                        { visibility ? 
-                            sumTransactions() < 0 ?
-                            `-${`$${Math.abs(sumTransactions()).toFixed(2)}`}`:
-                            `+${`$${Math.abs(sumTransactions()).toFixed(2)}`}`
-                            : `???`
+                            transactions.length 
+                            ?
+                                <>
+                                    <TransactionsContainer>
+                                        {transactions.map(t => {
+                                        return (
+                                                <TransactionBox key = {t.id}>
+                                                    <TransactionDate>
+                                                        {dayjs(t.date).format('DD/MM')}
+                                                    </TransactionDate>
+                                                    <TransactionDescription>
+                                                        {t.description}
+                                                    </TransactionDescription>
+                                                    <TransactionValue 
+                                                        className = {Number(t.value) < 0 ? "red" : "green"}
+                                                    >
+                                                        {
+                                                            Number(t.value) < 0 ?
+                                                            `- $${Number(Math.abs(t.value)).toFixed(2)}`:
+                                                            `+ $${Number(Math.abs(t.value)).toFixed(2)}` 
+                                                        }
+                                                
+                                                    </TransactionValue>
+                                                </TransactionBox>
+                                        )})}
+                                    </TransactionsContainer>
+                                </>
+                                :
+                                <NoTransactionsMessage>
+                                    {errorMessage}
+                                </NoTransactionsMessage>
                         }
-                    </BalanceValue>
-                </BalanceBox>
-                <DashboardTitle>
-                    Metrics
-                </DashboardTitle>
-                <MetricsHolder>
-                    <MetricsComponent >
-                        <div>
-                            <BsGraphUp size = {30} />
-                            <p>Incomes</p>
-                        </div>
-                        <MetricsValue className="green">
-                        { visibility ? 
-                        `+$${sumTransactions('incomes').toFixed(2)}` :
-                            '???'
-                        }
-                        </MetricsValue>
-                    </MetricsComponent>
-                    <MetricsComponent >
-                        <div>
-                            <BsGraphDown size = {30} />
-                            <p>Expenses</p>   
-                        </div>
-                        <MetricsValue className="red">
-                        { visibility ? 
-                        `-$${sumTransactions('expenses').toFixed(2)}` :
-                            '???'
-                        }                
-                        </MetricsValue>
-                    </MetricsComponent>
-                </MetricsHolder>
-                <DashboardTitle>
-                    Expenses by Category
-                </DashboardTitle>
-                <ChartHolder>
-                    <Doughnut 
-                        height={300}
-                        width={500}
-                        data = {{
-                                labels: expenseCategories.map(expense => expense.name),
-                                datasets: [{
-                                    label: 'Number of Votes',
-                                    data: expenseCategories.map(expense => expense.sum),
-                                    backgroundColor: [
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)',
-                                            'rgba(75, 192, 192, 0.2)',
-                                            'rgba(153, 102, 255, 0.2)',
-                                            'rgba(255, 159, 64, 0.2)'
-                                        ],
-                                        borderColor: [
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)'
-                                        ],
-                                        borderWidth: 1
-                                }]
-                            }}
-                            options={{
-                                maintainAspectRatio: false,
-                                aspectRatio: 1,
-                                plugins: {
-                                    legend: {
-                                        position: "right",
-                                        labels: {
-                                            boxWidth: 10,
-                                            boxHeight: 10,
-                                        }
-                                    },
-                                },
-                                scales: {
-                                    y:{
-                                        grid: {
-                                            display: false,
-                                        },
-                                        ticks:{
-                                            display: false,
-                                        },
-                                        beginAtZero: true
-                                    },
-                                },
-                        }}
-                    />
-                </ChartHolder>
-                <DashboardTitle>
-                    Incomes by Category
-                </DashboardTitle>
-                <ChartHolder>
-                    <Doughnut 
-                        height={300}
-                        width={500}
-                        data = {{
-                                labels: incomeCategories.map(income => income.name),
-                                datasets: [{
-                                    label: 'Number of Votes',
-                                    data: incomeCategories.map(income => income.sum),
-                                    backgroundColor: [
-                                            'rgba(255, 102, 250, 0.2)',
-                                            'rgba(23, 130, 255, 0.2)',
-                                            'rgba(105, 206, 106, 0.2)',
-                                        ],
-                                        borderColor: [
-                                            'rgba(255, 102, 250, 1)',
-                                            'rgba(23, 130, 255, 1)',
-                                            'rgba(105, 206, 106, 1)',
-                                        ],
-                                        borderWidth: 1
-                                }]
-                            }}
-                            options={{
-                                maintainAspectRatio: false,
-                                aspectRatio: 1,
-                                plugins: {
-                                    legend: {
-                                        position: "right",
-                                        labels: {
-                                            boxWidth: 10,
-                                            boxHeight: 10,
-                                        }
-                                    },
-                                },
-                                scales: {
-                                    y:{
-                                        grid: {
-                                            display: false,
-                                        },
-                                        ticks:{
-                                            display: false,
-                                        },
-                                        beginAtZero: true
-                                    },
-                                },
-                        }}
-                    />
-                </ChartHolder>
-                <DashboardTitle>
-                    Last Transactions
-                </DashboardTitle>
-                <WhiteBox hasTransactions = {transactions.length}>
-                    {
-                        transactions.length 
-                        ?
-                            <>
-                                <TransactionsContainer>
-                                    {transactions.map(t => {
-                                    return (
-                                            <TransactionBox key = {t.id}>
-                                                <TransactionDate>
-                                                    {dayjs(t.date).format('DD/MM')}
-                                                </TransactionDate>
-                                                <TransactionDescription>
-                                                    {t.description}
-                                                </TransactionDescription>
-                                                <TransactionValue 
-                                                    className = {Number(t.value) < 0 ? "red" : "green"}
-                                                >
-                                                    {
-                                                        Number(t.value) < 0 ?
-                                                        `- $${Number(Math.abs(t.value)).toFixed(2)}`:
-                                                        `+ $${Number(Math.abs(t.value)).toFixed(2)}` 
-                                                    }
-                                            
-                                                </TransactionValue>
-                                            </TransactionBox>
-                                    )})}
-                                </TransactionsContainer>
-                            </>
-                            :
-                            <NoTransactionsMessage>
-                                {errorMessage}
-                            </NoTransactionsMessage>
-                    }
-                    <SeeMore onClick={() => history.push('/cash-flow')}>See more</SeeMore>
-                </WhiteBox>
+                        <SeeMore onClick={() => history.push('/cash-flow')}>See more</SeeMore>
+                    </WhiteBox>
+                </>
+            }
+
         </CashFlowContainer>
     )
 }

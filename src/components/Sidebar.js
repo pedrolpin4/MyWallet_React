@@ -12,13 +12,20 @@ import {
 } from '../styles/SidebarStyles'
 import { useHistory } from "react-router-dom";
 
-const Sidebar = ({sidebar, logOut, setSidebar, setThemeType, themeType}) => {
+const Sidebar = ({sidebar, setSidebar, setThemeType, themeType}) => {
     const history = useHistory()
     const {
         userData
-    } = useContext(UserContext)
+    } = useContext(UserContext);
+    const { setUserData } = useContext(UserContext)
 
     const sidebarRef = useRef();
+
+    const logOut = () => {
+        localStorage.removeItem("userLogin");
+        setUserData({});
+        history.push("/");
+    }
 
     const closeModal = (e) => {
         if (sidebarRef.current === e.target) {

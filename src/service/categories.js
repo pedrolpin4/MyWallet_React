@@ -48,9 +48,13 @@ const getCategoryStatsByType = async (token, type) => {
         }     
     })
 
-    console.log(response);
+    if(response === 400) return {
+        success: false,
+        message: response.message
+    }
 
-    if(response?.data) return {
+
+    if(response.data) return {
         success: true,
         data: response.data
     }

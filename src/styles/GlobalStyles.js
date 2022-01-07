@@ -21,7 +21,6 @@ const GlobalStyles = createGlobalStyle`
         color: inherit;
     }
 
-
     /*reset css*/ 
     html,
     body,

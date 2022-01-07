@@ -6,10 +6,12 @@ import styled from "styled-components"
 import UserContext from "../context/UserContext"
 import financialRecords from "../service/financialRecords";
 import { HelloMessage, TransactionBox } from "../styles/Shared";
+import Loading from "../assets/Loading";
 import Sidebar from "./Sidebar";
 
-const CashFlow = ({setThemeType, themeType, logOut}) => {
+const CashFlow = ({setThemeType, themeType}) => {
     const history = useHistory();
+    const [ isLoading, setIsLoading ] = useState(true)
     const { userData } = useContext(UserContext);
     const [transactions, setTransactions] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
@@ -31,10 +33,12 @@ const CashFlow = ({setThemeType, themeType, logOut}) => {
         const result = await financialRecords.getCashFlow(token)
 
         if(result.data){
+            setIsLoading(false)
             setTransactions(result.data);
             return;
         }
 
+        setIsLoading(false)
         setErrorMessage(result.message);
         return;
     }
@@ -43,66 +47,72 @@ const CashFlow = ({setThemeType, themeType, logOut}) => {
 
     return(
         <CashFlowContainer>
-            <Sidebar sidebar = {sidebar} setSidebar = {setSidebar} 
-                logOut = {logOut} setThemeType = {setThemeType} themeType = {themeType}/>
-            <HeadersBox> 
-                <HelloMessage>
-                    Hello, {userData.name}
-                </HelloMessage>
-                <IoMenuOutline size = {30} className = "menu" onClick = {() => setSidebar(true)}/>
-            </HeadersBox>
-            <WhiteBox hasTransactions = {transactions.length}>
+                    <Sidebar sidebar = {sidebar} setSidebar = {setSidebar} 
+                        setThemeType = {setThemeType} themeType = {themeType}/>
+                    <HeadersBox> 
+                        <HelloMessage>
+                            Hello, {userData.name}
+                        </HelloMessage>
+                        <IoMenuOutline size = {30} className = "menu" onClick = {() => setSidebar(true)}/>
+                    </HeadersBox>
                 {
-                    transactions.length 
-                    ?
-                        <>
-                            <TransactionsContainer>
-                                <BalanceBox>
-                                    <BalanceText>
-                                        Balance
-                                    </BalanceText>
-                                    <BalanceValue
-                                        className = {sumTransactions() < 0 ? "red" : "green"}
-                                    >
-                                        { 
-                                            sumTransactions() < 0 ?
-                                            `- ${`$${Math.abs(sumTransactions()).toFixed(2)}`}`:
-                                            `+ ${`$${Math.abs(sumTransactions()).toFixed(2)}`}`
-                                        }
-                                    </BalanceValue>
-                                </BalanceBox>
-                                {transactions.map(t => {
-                                    return (
-                                        <TransactionBox key = {t.id}>
-                                            <TransactionDate>
-                                                {dayjs(t.date).format('DD/MM')}
-                                            </TransactionDate>
-                                            <TransactionDescription>
-                                                {t.description}
-                                            </TransactionDescription>
-                                            <TransactionValue 
-                                                className = {Number(t.value) < 0 ? "red" : "green"}
-                                            >
-                                                {
-                                                    Number(t.value) < 0 ?
-                                                    `- $${Number(Math.abs(t.value)).toFixed(2)}`:
-                                                    `+ $${Number(Math.abs(t.value)).toFixed(2)}` 
-                                                }
-                                            </TransactionValue>
-                                        </TransactionBox>
-                                )})} 
-                            </TransactionsContainer>
-                        </>
-                        :
-                        <NoTransactionsMessage>
-                            {errorMessage}
-                        </NoTransactionsMessage>
+                    isLoading ? 
+                    <Loading spinnerSize={70} color={"#fff"}/> :
+                    <>
+                        <WhiteBox hasTransactions = {transactions.length}>
+                            {
+                                transactions.length 
+                                ?
+                                    <>
+                                        <TransactionsContainer>
+                                            <BalanceBox>
+                                                <BalanceText>
+                                                    Balance
+                                                </BalanceText>
+                                                <BalanceValue
+                                                    className = {sumTransactions() < 0 ? "red" : "green"}
+                                                >
+                                                    { 
+                                                        sumTransactions() < 0 ?
+                                                        `- ${`$${Math.abs(sumTransactions()).toFixed(2)}`}`:
+                                                        `+ ${`$${Math.abs(sumTransactions()).toFixed(2)}`}`
+                                                    }
+                                                </BalanceValue>
+                                            </BalanceBox>
+                                            {transactions.map(t => {
+                                                return (
+                                                    <TransactionBox key = {t.id}>
+                                                        <TransactionDate>
+                                                            {dayjs(t.date).format('DD/MM')}
+                                                        </TransactionDate>
+                                                        <TransactionDescription>
+                                                            {t.description}
+                                                        </TransactionDescription>
+                                                        <TransactionValue 
+                                                            className = {Number(t.value) < 0 ? "red" : "green"}
+                                                        >
+                                                            {
+                                                                Number(t.value) < 0 ?
+                                                                `- $${Number(Math.abs(t.value)).toFixed(2)}`:
+                                                                `+ $${Number(Math.abs(t.value)).toFixed(2)}` 
+                                                            }
+                                                        </TransactionValue>
+                                                    </TransactionBox>
+                                            )})} 
+                                        </TransactionsContainer>
+                                    </>
+                                    :
+                                    <NoTransactionsMessage>
+                                        {errorMessage}
+                                    </NoTransactionsMessage>
+                            }
+                        </WhiteBox>
+                        <SeeMore onClick={() => history.push('/home')}>
+                            Dashboard
+                        </SeeMore>
+                    </>
                 }
-            </WhiteBox>
-            <SeeMore onClick={() => history.push('/home')}>
-                Dashboard
-            </SeeMore>
-        </CashFlowContainer>
+        </CashFlowContainer>    
     )
 }
 
@@ -203,7 +213,7 @@ const BalanceBox = styled.div`
     position: absolute;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid ${({ theme: {colors} } ) => colors.inputs === '#fff'  ? "rgba(255, 255, 255, 0.5)": "rgba(0, 0, 0, 0.5)"};
     z-index: 2;
     top: 0px;
     left: 0px;

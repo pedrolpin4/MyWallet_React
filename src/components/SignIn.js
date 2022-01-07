@@ -5,6 +5,7 @@ import auth from "../service/auth";
 import UserRegistration from "../styles/UserRegistration";
 import validations from "../validation/JoiValidations";
 import Loading from "../assets/Loading";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
     const {
@@ -12,13 +13,11 @@ const SignIn = () => {
         Logo,
         RegistrationForm,
         PageTransitionMessage,
-        ErrorMessage
     } = UserRegistration
 
     const history = useHistory();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
     const [disabled, setDisabled] = useState(false);
     const {userData, setUserData} = useContext(UserContext);
 
@@ -41,7 +40,7 @@ const SignIn = () => {
         };
     
         if(signInValidator.validate(forms).error){
-            setErrorMessage(signInValidator.validate(forms).error.details[0].message);
+           toast.error(signInValidator.validate(forms).error.details[0].message);
             setDisabled(false);
             return;
         }
@@ -56,7 +55,7 @@ const SignIn = () => {
             return;
         }
 
-        setErrorMessage(result.message)
+        toast.error(result.message)
     }
     
     return(
@@ -67,11 +66,8 @@ const SignIn = () => {
                     onChange = {e => setEmail(e.target.value)}/>
                 <input placeholder = "Password" value = {password} disabled = {disabled}
                    type = "password" onChange = {e => setPassword(e.target.value)}/>
-                <button className = "login" disabled = {disabled}>{disabled ?<Loading spinnerSize = {25} color = {"#fff"}/> : "Enter"}</button>
+                <button className = "login" disabled = {disabled}>{disabled ?<Loading isLogin = {true} spinnerSize = {25} color = {"#fff"}/> : "Enter"}</button>
             </RegistrationForm>
-            <ErrorMessage>
-                {errorMessage}
-            </ErrorMessage>
             <Link to = {"/sign-up"}> 
                 <PageTransitionMessage className = "toggler">
                     First time on MyWallet? Sign-up now!

@@ -12,7 +12,7 @@ const SelectContainer = styled.div`
         position: absolute;
         top: 15px;
         right: 15px;
-        color: white;
+        color: ${({ theme: { colors } } ) => colors.inputs};
         transition: all .4s;
         transform: ${props => props.isVisible ? 'rotateX(-180deg)' : 'none'};
     }
@@ -24,8 +24,8 @@ const ExamSelect = styled.div`
     width: 100%;
     height: 58px;
     font-size: 20px;
-    color: white;
-    background-color: #222;
+    color: ${({ theme: { colors } } ) => colors.inputs};
+    background: ${({ theme: { colors } } ) => colors.secondary};
     outline: none;
     border: none;
     border-radius: 5px;
@@ -61,7 +61,7 @@ const Option = styled.div`
     transition: all .4s;
     height: ${props => props.isVisible ? '50px' : '0px'};
     color: white;
-    background: ${props => props.isVisible ? 'rgba(120, 120, 120, 0.3)' : ''};
+    background: ${props => props.isVisible ? 'rgba(120, 120, 120, 0.5)' : ''};
     
     :hover{
         background: rgba(120, 120, 120, 0.5);
