@@ -1,7 +1,8 @@
 # My Wallet
 
 <p align="center" >
- <img src = "https://user-images.githubusercontent.com/87671165/143910821-ba9a6a81-578b-46a0-86e3-355e0bb51072.gif" height = "500px"/>
+ <img src = "https://user-images.githubusercontent.com/87671165/148655979-25f64940-fd85-45d7-bebf-db70f45763eb.gif" height = "500px"/>
+ <img src = "https://user-images.githubusercontent.com/87671165/148655980-f5229ae3-b534-4daa-9243-b8c83cf00698.gif" height = "500px"/>
 </p>
 
 ## About
