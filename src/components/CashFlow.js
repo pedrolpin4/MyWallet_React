@@ -78,7 +78,7 @@ const CashFlow = ({setThemeType, themeType}) => {
     }, [reload])
 
     return(
-        <CashFlowContainer>
+        <CashFlowContainer themeType = {themeType}>
                     <Sidebar sidebar = {sidebar} setSidebar = {setSidebar} 
                         setThemeType = {setThemeType} themeType = {themeType}/>
                     <HeadersBox ref = {scrollRef}> 
@@ -186,10 +186,10 @@ const CashFlowContainer = styled.div`
     padding: 0px 25px 25px 25px;
     overflow: hidden;
     .red{
-        color: ${({ theme: { colors } } ) => colors.quarternary};
+        color: ${props => props.themeType === 'light'  ? '#C70000' : '#FF2B20'};
     }
     .green{
-        color: ${({ theme: { colors } } ) => colors.terciary};
+        color: ${props => props.themeType === 'light' ? "#03AC00" : "#02FF09"};
     }
 `
 
