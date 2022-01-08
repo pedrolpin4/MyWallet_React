@@ -74,7 +74,6 @@ const updateTransaction = async (forms, id, token, type) => {
 
     const response = await API.put(`/transactions/${id}?type=${type}`, {value, description, categoryId}, BearerToken(token))
     .catch(err => {
-        console.log(err.response);
         if(err.response){
             status = err.response.status;
             message = err.response.data;
@@ -116,7 +115,6 @@ const deleteTransaction = async (id, token) => {
         data: {}, 
     })
     .catch(err => {
-        console.log(err.response);
         if(err.response){
             status = err.response.status;
             message = err.response.data;
