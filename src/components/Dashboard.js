@@ -153,6 +153,9 @@ const DashBoard = ({setThemeType, themeType}) => {
                             </MetricsValue>
                         </MetricsComponent>
                     </MetricsHolder>
+                    {
+                        expenseCategories.length ?
+                    <>
                     <DashboardTitle>
                         Expenses by Category
                     </DashboardTitle>
@@ -209,100 +212,102 @@ const DashBoard = ({setThemeType, themeType}) => {
                                     },
                             }}
                         />
-                    </ChartHolder>
-                    <DashboardTitle>
-                        Incomes by Category
-                    </DashboardTitle>
-                    <ChartHolder>
-                        <Doughnut 
-                            height={300}
-                            width={500}
-                            data = {{
-                                    labels: incomeCategories.map(income => income.name),
-                                    datasets: [{
-                                        label: 'Number of Votes',
-                                        data: incomeCategories.map(income => income.sum),
-                                        backgroundColor: [
-                                                'rgba(255, 102, 250, 0.2)',
-                                                'rgba(23, 130, 255, 0.2)',
-                                                'rgba(105, 206, 106, 0.2)',
-                                            ],
-                                            borderColor: [
-                                                'rgba(255, 102, 250, 1)',
-                                                'rgba(23, 130, 255, 1)',
-                                                'rgba(105, 206, 106, 1)',
-                                            ],
-                                            borderWidth: 1
-                                    }]
+                    </ChartHolder> </>: ''}
+                    {
+                        incomeCategories.length ? 
+                    <>
+                        <DashboardTitle>
+                            Incomes by Category
+                        </DashboardTitle>
+                        <ChartHolder>
+                            <Doughnut 
+                                height={300}
+                                width={500}
+                                data = {{
+                                        labels: incomeCategories.map(income => income.name),
+                                        datasets: [{
+                                            label: 'Number of Votes',
+                                            data: incomeCategories.map(income => income.sum),
+                                            backgroundColor: [
+                                                    'rgba(255, 102, 250, 0.2)',
+                                                    'rgba(23, 130, 255, 0.2)',
+                                                    'rgba(105, 206, 106, 0.2)',
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255, 102, 250, 1)',
+                                                    'rgba(23, 130, 255, 1)',
+                                                    'rgba(105, 206, 106, 1)',
+                                                ],
+                                                borderWidth: 1
+                                        }]
+                                    }}
+                                    options={{
+                                        maintainAspectRatio: false,
+                                        aspectRatio: 1,
+                                        plugins: {
+                                            legend: {
+                                                position: "right",
+                                                labels: {
+                                                    boxWidth: 10,
+                                                    boxHeight: 10,
+                                                }
+                                            },
+                                        },
+                                        scales: {
+                                            y:{
+                                                grid: {
+                                                    display: false,
+                                                },
+                                                ticks:{
+                                                    display: false,
+                                                },
+                                                beginAtZero: true
+                                            },
+                                        },
                                 }}
-                                options={{
-                                    maintainAspectRatio: false,
-                                    aspectRatio: 1,
-                                    plugins: {
-                                        legend: {
-                                            position: "right",
-                                            labels: {
-                                                boxWidth: 10,
-                                                boxHeight: 10,
-                                            }
-                                        },
-                                    },
-                                    scales: {
-                                        y:{
-                                            grid: {
-                                                display: false,
-                                            },
-                                            ticks:{
-                                                display: false,
-                                            },
-                                            beginAtZero: true
-                                        },
-                                    },
-                            }}
-                        />
-                    </ChartHolder>
-                    <DashboardTitle>
-                        Last Transactions
-                    </DashboardTitle>
-                    <WhiteBox hasTransactions = {transactions.length}>
-                        {
-                            transactions.length 
-                            ?
-                                <>
-                                    <TransactionsContainer>
-                                        {transactions.map(t => {
-                                        return (
-                                                <TransactionBox key = {t.id}>
-                                                    <TransactionDate>
-                                                        {dayjs(t.date).format('DD/MM')}
-                                                    </TransactionDate>
-                                                    <TransactionDescription>
-                                                        {t.description}
-                                                    </TransactionDescription>
-                                                    <TransactionValue 
-                                                        className = {Number(t.value) < 0 ? "red" : "green"}
-                                                    >
-                                                        {
-                                                            Number(t.value) < 0 ?
-                                                            `- $${Number(Math.abs(t.value)).toFixed(2)}`:
-                                                            `+ $${Number(Math.abs(t.value)).toFixed(2)}` 
-                                                        }
-                                                
-                                                    </TransactionValue>
-                                                </TransactionBox>
-                                        )})}
-                                    </TransactionsContainer>
-                                </>
-                                :
-                                <NoTransactionsMessage>
-                                    {errorMessage}
-                                </NoTransactionsMessage>
-                        }
+                            />
+                        </ChartHolder>
+                    </> : ''
+                    }
+                    {
+                    transactions.length ?
+                    <>
+                        <DashboardTitle>
+                            Last Transactions
+                        </DashboardTitle>
+                        <WhiteBox hasTransactions = {transactions.length}>
+                            <TransactionsContainer>
+                                {transactions.map(t => {
+                                return (
+                                        <TransactionBox key = {t.id}>
+                                            <TransactionDate>
+                                                {dayjs(t.date).format('DD/MM')}
+                                            </TransactionDate>
+                                            <TransactionDescription>
+                                                {t.description}
+                                            </TransactionDescription>
+                                            <TransactionValue 
+                                                className = {Number(t.value) < 0 ? "red" : "green"}
+                                            >
+                                                {
+                                                    Number(t.value) < 0 ?
+                                                    `- $${Number(Math.abs(t.value)).toFixed(2)}`:
+                                                    `+ $${Number(Math.abs(t.value)).toFixed(2)}` 
+                                                }
+                                        
+                                            </TransactionValue>
+                                        </TransactionBox>
+                                )})}
+                            </TransactionsContainer>
                         <SeeMore onClick={() => history.push('/cash-flow')}>See more</SeeMore>
-                    </WhiteBox>
-                </div>
-            }
-
+                    </WhiteBox> 
+                    </> :
+                    <NoTransactionsMessage>
+                        {errorMessage}
+                    </NoTransactionsMessage>
+                }
+            </div> // effect
+        }
         </CashFlowContainer>
     )
 }
