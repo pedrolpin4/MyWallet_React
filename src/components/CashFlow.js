@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import { IoMenuOutline } from  "react-icons/io5";
 import { useHistory } from "react-router";
 import styled from "styled-components"
@@ -8,14 +8,39 @@ import financialRecords from "../service/financialRecords";
 import { HelloMessage, TransactionBox } from "../styles/Shared";
 import Loading from "../assets/Loading";
 import Sidebar from "./Sidebar";
+import { toast } from "react-toastify";
+import EditModal from "./Edit";
 
 const CashFlow = ({setThemeType, themeType}) => {
     const history = useHistory();
+    const scrollRef = useRef();
     const [ isLoading, setIsLoading ] = useState(true)
     const { userData } = useContext(UserContext);
     const [transactions, setTransactions] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [ edited, setEdited ] = useState();
+    const [reload, setReload] = useState(0);
     const [errorMessage, setErrorMessage] = useState("");
     const [sidebar, setSidebar] = useState(false);
+    const modalRef = useRef();
+    console.log(reload);
+    
+    function closeModal(e) {
+        if (modalRef.current === e.target) {
+          setShowModal(false);
+        }
+    }
+    
+    const modalKeyEvents = useCallback((e) => {
+        if (e.key === 'Escape' && showModal) {
+            setShowModal(false);
+        }
+    }, [setShowModal, showModal]);
+
+    useEffect(() => {
+        document.addEventListener('keydown', modalKeyEvents);
+    }, [modalKeyEvents]);
+
 
     if(!localStorage.getItem("userLogin")){
         history.push("/");
@@ -30,6 +55,7 @@ const CashFlow = ({setThemeType, themeType}) => {
     }
 
     const cashFlowFunction = async (token) =>  {
+        setIsLoading(true)
         const result = await financialRecords.getCashFlow(token)
 
         if(result.data){
@@ -43,13 +69,20 @@ const CashFlow = ({setThemeType, themeType}) => {
         return;
     }
 
-    useEffect(() => cashFlowFunction(JSON.parse(localStorage.getItem("userLogin"))?.token), [])
+    useEffect(() => {
+        scrollRef.current.scrollIntoView(true);
+        toast.info('Click on the record to edit or delete')
+    }, [])
+
+    useEffect(() => {
+        cashFlowFunction(JSON.parse(localStorage.getItem("userLogin"))?.token)
+    }, [reload])
 
     return(
         <CashFlowContainer>
                     <Sidebar sidebar = {sidebar} setSidebar = {setSidebar} 
                         setThemeType = {setThemeType} themeType = {themeType}/>
-                    <HeadersBox> 
+                    <HeadersBox ref = {scrollRef}> 
                         <HelloMessage>
                             Hello, {userData.name}
                         </HelloMessage>
@@ -81,21 +114,23 @@ const CashFlow = ({setThemeType, themeType}) => {
                                             </BalanceBox>
                                             {transactions.map(t => {
                                                 return (
-                                                    <TransactionBox key = {t.id}>
+                                                    <TransactionBox key = {t.id} onClick = {() => {
+                                                        setShowModal(true)
+                                                        setEdited(t)
+                                                    }}>
                                                         <TransactionDate>
-                                                            {dayjs(t.date).format('DD/MM')}
+                                                            <p>{dayjs(t.date).format('DD/MM')}</p>
                                                         </TransactionDate>
                                                         <TransactionDescription>
-                                                            {t.description}
+                                                            <p className="mb-5">{t.description}</p>
+                                                            <p className="category">{t.category}</p>
                                                         </TransactionDescription>
-                                                        <TransactionValue 
-                                                            className = {Number(t.value) < 0 ? "red" : "green"}
-                                                        >
-                                                            {
+                                                        <TransactionValue>
+                                                            <p className = {Number(t.value) < 0 ? "red" : "green"}>{
                                                                 Number(t.value) < 0 ?
                                                                 `- $${Number(Math.abs(t.value)).toFixed(2)}`:
                                                                 `+ $${Number(Math.abs(t.value)).toFixed(2)}` 
-                                                            }
+                                                            }</p>
                                                         </TransactionValue>
                                                     </TransactionBox>
                                             )})} 
@@ -112,6 +147,13 @@ const CashFlow = ({setThemeType, themeType}) => {
                         </SeeMore>
                     </>
                 }
+                <>
+                {
+                    showModal ?
+                    <EditModal modalRef = {modalRef} closeModal = {closeModal} setReload = {setReload} 
+                        edited = {edited} setShowModal = {setShowModal}/> : ''
+                }
+                </>
         </CashFlowContainer>    
     )
 }
@@ -120,7 +162,7 @@ const HeadersBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 30px;
+    margin: 25px 0px 30px 0px;
     transition: all .2s ease-in;
 
     svg{
@@ -142,7 +184,8 @@ const CashFlowContainer = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
-    padding: 25px;
+    padding: 0px 25px 25px 25px;
+    overflow: hidden;
     .red{
         color: ${({ theme: { colors } } ) => colors.quarternary};
     }
@@ -153,6 +196,7 @@ const CashFlowContainer = styled.div`
 
 
 const WhiteBox = styled.div`
+    animation: moveInRight .5s ease-in-out;
     position: relative;
     width: 100%;
     height: calc(100vh - 220px);
@@ -185,12 +229,18 @@ const TransactionsContainer = styled.div`
     justify-content: flex-start;
     background: ${({ theme: { colors } } ) => colors.secondary};
 
+    svg {
+        cursor: pointer;
+        margin-right: 5px;
+    }
 `
 
 const TransactionDate = styled.div`
-    width: 30px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 10px;
     font-size: 16px;
-    line-height: 19px;
     color: ${({ theme: { colors } } ) => colors.secondaryDark};
 `
 
@@ -199,12 +249,21 @@ const TransactionDescription = styled.div`
     text-align: start;
     overflow-x: hidden;
     font-size: 16px;
-    line-height: 19px;
     color: ${({ theme: { colors } } ) => colors.inputs};
+
+    .mb-5 {
+        margin-bottom: 5px;
+    }
+
+    .category {
+        color: ${({ theme: { colors } } ) => colors.secondaryDark};
+        font-size: 12px;
+    }
 `
 
 const TransactionValue = styled.div`
-    width: 100px;
+    min-width: 80px;
+    height: 100%;
     font-size: 16px;
     line-height: 19px;
     text-align: end;
@@ -249,6 +308,7 @@ const SeeMore = styled.div`
     color: #333;
     align-self: center;
     transition: all .4s;
+    animation: moveInBottom .5s ease-in-out;
     cursor: pointer; 
 
     &::after{

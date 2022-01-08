@@ -104,7 +104,7 @@ const DashBoard = ({setThemeType, themeType}) => {
             {
                 isLoading ? 
                 <Loading spinnerSize={70} color={"#fff"}/> :
-                <>
+                <div className="effect">
                     <BalanceBox>
                         <BalanceText>
                             <p>Balance</p>  
@@ -300,7 +300,7 @@ const DashBoard = ({setThemeType, themeType}) => {
                         }
                         <SeeMore onClick={() => history.push('/cash-flow')}>See more</SeeMore>
                     </WhiteBox>
-                </>
+                </div>
             }
 
         </CashFlowContainer>
@@ -322,6 +322,9 @@ const CashFlowContainer = styled.div`
     }
     .white{
         color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
+    }
+    .effect {
+        animation: moveInRight .5s ease-in-out;
     }
 `
 
@@ -390,7 +393,7 @@ const BalanceBox = styled.div`
     justify-content: space-between;
     z-index: 2;
     width: 100%;
-    margin: 90px 0px 30px 0px;;
+    margin: 90px 0px 30px 0px;
 `
 
 const BalanceText = styled.div`

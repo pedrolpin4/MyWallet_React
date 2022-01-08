@@ -34,10 +34,17 @@ const HeadersContainer = styled.div`
 `
 
 const TransactionBox = styled.div`
+    cursor: pointer;
     width: 100%;
+    height: auto;
     padding: 12px;
     display: flex;
     justify-content: space-between;
+
+    :hover{
+        background: ${({ theme: { colors } } ) => colors.inputs === '#fff' ?
+         'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)'};
+    }
 `
 
 

@@ -9,39 +9,6 @@ const LaunchingContainer = styled.div`
     flex-direction: column;
     animation: moveInRight .5s ease-in-out;
 
-    @keyframes moveInRight{
-        0%{
-            opacity: 0;
-            transform: translateX(300px);
-        }
-
-        100%{
-            opacity: 1;
-            transform: translate(0);
-        }
-    }
-
-    input{
-        width: 100%;
-        align-self: center;
-        height: 58px;
-        background: ${({ theme: { colors } } ) => colors.secondary};
-        border-radius: 5px;
-        margin-bottom: 13px;
-        font-size: 20px;
-        line-height: 23px;
-        color: ${({ theme: { colors } } ) => colors.inputs};
-        padding: 15px;
-
-        ::placeholder{
-            font-family: 'Raleway', sans-serif;
-            font-size: 20px;
-            line-height: 23px;
-            opacity: 0.6;
-            color: ${({ theme: { colors } } ) => colors.inputs};
-        }
-    }
-
     a{
         align-self: center;
     }
@@ -72,6 +39,27 @@ const LaunchingForm = styled.form`
     width: 100%;
     flex-direction: column;
     align-items: center;
+
+    input{
+        width: 100%;
+        align-self: center;
+        height: 58px;
+        background: ${({ theme: { colors } } ) => colors.secondary};
+        border-radius: 5px;
+        margin-bottom: 13px;
+        font-size: 20px;
+        line-height: 23px;
+        color: ${({ theme: { colors } } ) => colors.inputs};
+        padding: 15px;
+
+        ::placeholder{
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px;
+            line-height: 23px;
+            opacity: 0.6;
+            color: ${({ theme: { colors } } ) => colors.inputs};
+        }
+    }
     
     .group{
         position: relative;
@@ -126,20 +114,36 @@ const LaunchingForm = styled.form`
     .radio-input:checked ~ .radio-label .radio-button::after{
         opacity: 1;
     }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        width: min(80%, 400px);
+    }
+
+    .edit {
+        width: 120px;
+        background: #fff;
+    }
+
+    .delete {
+        width: 120px;
+        background: ${({ theme: { colors } } ) => colors.quarternary};
+        color: white;
+    }
 `
 
 const SeeMore = styled.button`
     font-family: Raleway;
     position: relative;
-    font-size: 22px;
+    font-size: 19px;
     margin: 25px 0px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 220px;
-    height: 50px;
+    width: 160px;
+    height: 42px;
     border-radius: 25px;
-    background-color: #fff;
     color: #333;
     align-self: center;
     transition: all .4s;
@@ -147,8 +151,8 @@ const SeeMore = styled.button`
 
     &::after{
         content: "";
-        background-color: #fff;
         z-index: -1;
+        background: inherit;
         display: inline-block;
         height: 100%;
         width: 100%;

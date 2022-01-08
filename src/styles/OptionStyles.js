@@ -61,7 +61,7 @@ const Option = styled.div`
     transition: all .4s;
     height: ${props => props.isVisible ? '50px' : '0px'};
     color: white;
-    background: ${props => props.isVisible ? 'rgba(120, 120, 120, 0.5)' : ''};
+    background: ${props => props.isVisible ? 'rgba(80, 80, 80, 0.5)' : ''};
     
     :hover{
         background: rgba(120, 120, 120, 0.5);

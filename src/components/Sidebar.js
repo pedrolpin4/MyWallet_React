@@ -1,5 +1,5 @@
 import { useContext, useRef } from "react";
-import { IoAddCircleOutline, IoCloseOutline, IoMoonSharp, IoPencilSharp, IoSunnySharp } from "react-icons/io5";
+import { IoAddCircleOutline, IoCloseOutline, IoMoonSharp, IoSunnySharp } from "react-icons/io5";
 import { GoGraph } from 'react-icons/go'
 import { AiOutlineHome } from 'react-icons/ai'
 import UserContext from "../context/UserContext"
@@ -14,9 +14,6 @@ import { useHistory } from "react-router-dom";
 
 const Sidebar = ({sidebar, setSidebar, setThemeType, themeType}) => {
     const history = useHistory()
-    const {
-        userData
-    } = useContext(UserContext);
     const { setUserData } = useContext(UserContext)
 
     const sidebarRef = useRef();
@@ -39,7 +36,7 @@ const Sidebar = ({sidebar, setSidebar, setThemeType, themeType}) => {
         </NavOverlay>
         <NavMenu sidebar = {sidebar}>
             <NavMenuHeader>
-                <p>Welcome, {userData.name}</p>
+                <p>MyWallet</p>
                 <IoCloseOutline size = {25} onClick = {() => setSidebar(false)}/>    
             </NavMenuHeader>
             <NavOption onClick = {() => {
@@ -56,10 +53,6 @@ const Sidebar = ({sidebar, setSidebar, setThemeType, themeType}) => {
             <NavOption onClick = {() => history.push('/register')}>
                 <IoAddCircleOutline size = {22} />
                 <p>Register transaction</p>
-            </NavOption>
-            <NavOption onClick = {() => null}>
-                <IoPencilSharp size = {20} />
-                <p>Edit your records</p>
             </NavOption>
             <NavOption onClick = {() => {
                 setThemeType(prev => prev === 'light' ? 'dark' : 'light');

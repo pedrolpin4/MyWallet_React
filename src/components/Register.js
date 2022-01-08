@@ -95,7 +95,7 @@ const Register = () => {
     return(
         <LaunchingContainer>
             <LaunchingHeader>
-                <h1>New Register</h1>
+                <h1>New Record</h1>
                 <IoHomeSharp color = {"#fff"} size = {20} className = "home"
                     onClick = {() => history.push("/cash-flow")}/>
             </LaunchingHeader>
@@ -132,7 +132,7 @@ const Register = () => {
                         </label>  
                     </div>
                 </div>
-                <SeeMore disabled = {disabled} className = "save">Save Register</SeeMore>
+                <SeeMore disabled = {disabled} className = "save">Save Record</SeeMore>
             </LaunchingForm>
         </LaunchingContainer>
     )
