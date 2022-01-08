@@ -7,8 +7,8 @@ const light = {
     secondary: "#FFF",
     secondaryAdaptable: "#FFF",
     secondaryDark: "#868686",
-    terciary: "#03AC00",
-    quarternary: '#C70000',
+    terciary: "#02FF09",
+    quarternary: '#FF2B20',
     inputs: "#000",
   },
 };

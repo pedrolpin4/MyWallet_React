@@ -17,7 +17,7 @@ const HeadersContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     z-index: 3;
-    background-color: ${({ theme: { colors } } ) => colors.secondary};
+    background-color: ${({ theme: { colors } } ) => colors.primary};
     margin-bottom: 23px;
     transition: all .2s ease-in;
 

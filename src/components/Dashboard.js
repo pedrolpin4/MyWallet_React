@@ -168,7 +168,15 @@ const DashBoard = ({setThemeType, themeType}) => {
                                     datasets: [{
                                         label: 'Number of Votes',
                                         data: expenseCategories.map(expense => expense.sum),
-                                        backgroundColor: [
+                                        backgroundColor: themeType === 'light' ? [
+                                            'rgba(255, 99, 132, 0.8)',
+                                            'rgba(54, 162, 235, 0.8)',
+                                            'rgba(255, 206, 86, 0.8)',
+                                            'rgba(75, 192, 192, 0.8)',
+                                            'rgba(153, 102, 255, 0.8)',
+                                            'rgba(255, 159, 64, 0.8)'
+                                        ] 
+                                        : [
                                                 'rgba(255, 99, 132, 0.2)',
                                                 'rgba(54, 162, 235, 0.2)',
                                                 'rgba(255, 206, 86, 0.2)',
@@ -194,6 +202,7 @@ const DashBoard = ({setThemeType, themeType}) => {
                                         legend: {
                                             position: "right",
                                             labels: {
+                                                color: '#fff',
                                                 boxWidth: 10,
                                                 boxHeight: 10,
                                             }
@@ -228,17 +237,23 @@ const DashBoard = ({setThemeType, themeType}) => {
                                         datasets: [{
                                             label: 'Number of Votes',
                                             data: incomeCategories.map(income => income.sum),
-                                            backgroundColor: [
-                                                    'rgba(255, 102, 250, 0.2)',
-                                                    'rgba(23, 130, 255, 0.2)',
-                                                    'rgba(105, 206, 106, 0.2)',
-                                                ],
-                                                borderColor: [
-                                                    'rgba(255, 102, 250, 1)',
-                                                    'rgba(23, 130, 255, 1)',
-                                                    'rgba(105, 206, 106, 1)',
-                                                ],
-                                                borderWidth: 1
+                                            backgroundColor: themeType === 'light' ? [
+                                                'rgba(255, 102, 250, 0.8)',
+                                                'rgba(23, 130, 255, 0.8)',
+                                                'rgba(105, 206, 106, 0.8)',
+                                            ] 
+                                            :
+                                            [
+                                                'rgba(255, 102, 250, 0.2)',
+                                                'rgba(23, 130, 255, 0.2)',
+                                                'rgba(105, 206, 106, 0.2)',
+                                            ],
+                                            borderColor: [
+                                                'rgba(255, 102, 250, 1)',
+                                                'rgba(23, 130, 255, 1)',
+                                                'rgba(105, 206, 106, 1)',
+                                            ],
+                                            borderWidth: 1
                                         }]
                                     }}
                                     options={{
@@ -248,6 +263,7 @@ const DashBoard = ({setThemeType, themeType}) => {
                                             legend: {
                                                 position: "right",
                                                 labels: {
+                                                    color: "#fff",
                                                     boxWidth: 10,
                                                     boxHeight: 10,
                                                 }
@@ -284,7 +300,7 @@ const DashBoard = ({setThemeType, themeType}) => {
                                                 {dayjs(t.date).format('DD/MM')}
                                             </TransactionDate>
                                             <TransactionDescription>
-                                                {t.description}
+                                                <p className="dashboard">{t.description}</p>
                                             </TransactionDescription>
                                             <TransactionValue 
                                                 className = {Number(t.value) < 0 ? "red" : "green"}
@@ -368,7 +384,7 @@ const TransactionDescription = styled.div`
     overflow-x: hidden;
     font-size: 16px;
     line-height: 19px;
-    color: ${({ theme: { colors } } ) => colors.inputs};
+    color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
 `
 
 const TransactionValue = styled.div`
