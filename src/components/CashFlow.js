@@ -23,7 +23,6 @@ const CashFlow = ({setThemeType, themeType}) => {
     const [errorMessage, setErrorMessage] = useState("");
     const [sidebar, setSidebar] = useState(false);
     const modalRef = useRef();
-    console.log(reload);
     
     function closeModal(e) {
         if (modalRef.current === e.target) {
