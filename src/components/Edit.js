@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import CurrencyInput from 'react-currency-input';
 import { toast } from 'react-toastify';
-import { useContext, useEffect } from 'react/cjs/react.development';
 import UserContext from '../context/UserContext';
 import categoriesServices from '../service/categories';
 import financialRecords from '../service/financialRecords';
