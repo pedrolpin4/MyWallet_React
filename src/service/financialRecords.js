@@ -5,8 +5,7 @@ const getCashFlow = async (token) => {
     let status;
     let serverError;
 
-    const response = await API.get("/cash-flow", BearerToken(token))
-
+    const response = await API.get("/cash-flow", BearerToken(token))    
     .catch(err => {
         if(err.response){
             status = err.response.status;
@@ -67,20 +66,106 @@ const postTransaction = async (forms, token, type) => {
 
 }
 
+const updateTransaction = async (forms, id, token, type) => {
+    let status;
+    let serverError;
+    let message;
+    const {value, description, categoryId} = forms;
+
+    const response = await API.put(`/transactions/${id}?type=${type}`, {value, description, categoryId}, BearerToken(token))
+    .catch(err => {
+        console.log(err.response);
+        if(err.response){
+            status = err.response.status;
+            message = err.response.data;
+            return status
+        }
+
+        serverError = {
+            success: false,
+            message: "Looks like our server is not okay, we'll fix it ASAP"
+        }     
+    })
+
+    if(status === 400) return {
+        success: false,
+        message: message
+    }
+        
+    if(status === 401) return {
+        success: false,
+        message: message
+    }
+        
+
+    if(response?.data) return {
+        success: true,
+        data: response.data
+    }
+
+    return serverError
+}
+
+const deleteTransaction = async (id, token) => {
+    let status;
+    let serverError;
+    let message;
+
+    const response = await API.delete(`/transactions/${id}`, { 
+        ...BearerToken(token),
+        data: {}, 
+    })
+    .catch(err => {
+        console.log(err.response);
+        if(err.response){
+            status = err.response.status;
+            message = err.response.data;
+            return status
+        }
+
+        serverError = {
+            success: false,
+            message: "Looks like our server is not okay, we'll fix it ASAP"
+        }     
+    })
+
+    if(status === 400) return {
+        success: false,
+        message: message
+    }
+        
+    if(status === 401) return {
+        success: false,
+        message: message
+    }
+        
+
+    if(response?.data) return {
+        success: true,
+        data: response.data
+    }
+
+    return serverError
+}
+
 const postIncomes = async (forms, token) => {
-   const result = await postTransaction(forms, token, "incomes")
+   const { value, description, categoryId } = forms
+   const result = await postTransaction({value, description, categoryId}, token, "incomes")
    return result;
 }
 
 const postExpenses = async (forms, token) => {
-   const result = await postTransaction(forms, token, "expenses")
+   const { value, description, categoryId } = forms
+   const result = await postTransaction({value, description, categoryId}, token, "expenses")
    return result;
 }
 
 const financialRecords = {
     postIncomes,
     postExpenses,
-    getCashFlow
+    getCashFlow,
+    updateTransaction,
+    deleteTransaction
 }
 
 export default financialRecords

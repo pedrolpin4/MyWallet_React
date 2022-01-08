@@ -4,6 +4,7 @@ import UserRegistration from "../styles/UserRegistration";
 import auth from "../service/auth";
 import validations from "../validation/JoiValidations";
 import Loading from "../assets/Loading";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
     const history = useHistory();
@@ -13,14 +14,12 @@ const SignUp = () => {
         Logo,
         RegistrationForm,
         PageTransitionMessage,
-        ErrorMessage
     } = UserRegistration;
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setrepeatPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
     const [disabled, setDisabled] = useState("");
     
     const signUpValidator = validations.signUp;
@@ -37,13 +36,13 @@ const SignUp = () => {
         setDisabled(true);
 
         if(signUpValidator.validate(forms).error){
-            setErrorMessage(signUpValidator.validate(forms).error.details[0].message);
+            toast.error(signUpValidator.validate(forms).error.details[0].message);
             setDisabled(false);
             return;
         }
 
         if(repeatPassword !== password){
-            setErrorMessage("Your password and its confirmation are not the same");
+            toast.error("Your password and its confirmation are not the same");
             setDisabled(false);
             return;
         }
@@ -56,7 +55,7 @@ const SignUp = () => {
             return;
         }
 
-        setErrorMessage(result.message)
+        toast.error(result.message)
     }
     
     return(
@@ -71,11 +70,8 @@ const SignUp = () => {
                     type = "password" onChange = {e => setPassword(e.target.value)}/>
                 <input placeholder = "Confirm your password" value = {repeatPassword} 
                     type = "password" onChange = {e => setrepeatPassword(e.target.value)} disabled = {disabled}/>
-                <button className = "register" disabled = {disabled}>{disabled ?<Loading spinnerSize = {25} color = {"#fff"}/> : "Register"}</button>
+                <button className = "register" disabled = {disabled}>{disabled ?<Loading isLogin = {true} spinnerSize = {25} color = {"#fff"}/> : "Register"}</button>
             </RegistrationForm>
-            <ErrorMessage>
-                {errorMessage}
-            </ErrorMessage>
             <Link to = {"/"}> 
                 <PageTransitionMessage className = "toggler">
                     Already have an account? Enter now!                   

@@ -1,47 +1,16 @@
 import styled from "styled-components"
 
 const LaunchingContainer = styled.div`
+    font-family: Raleway;
     width: 100%;
     height: 100%;
     padding: 25px;
     display: flex;
     flex-direction: column;
-    @keyframes moveInRight{
-        0%{
-            opacity: 0;
-            transform: translateX(300px);
-        }
-
-        100%{
-            opacity: 1;
-            transform: translate(0);
-        }
-    }
-
-    input{
-        width: 100%;
-        align-self: center;
-        height: 58px;
-        background: ${({ theme: { colors } } ) => colors.secondary};
-        border-radius: 5px;
-        margin-bottom: 13px;
-        font-size: 20px;
-        line-height: 23px;
-        color: ${({ theme: { colors } } ) => colors.inputs};
-        padding: 15px;
-        animation: moveInRight .5s ease-in-out;
-
-        ::placeholder{
-            font-family: 'Raleway', sans-serif;
-            font-size: 20px;
-            line-height: 23px;
-            color: ${({ theme: { colors } } ) => colors.inputs};
-        }
-    }
+    animation: moveInRight .5s ease-in-out;
 
     a{
         align-self: center;
-        animation: moveInRight .5s ease-in-out;
     }
 `
 
@@ -56,14 +25,12 @@ const LaunchingHeader = styled.div`
         font-size: 26px;
         line-height: 31px;
         color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
-        animation: moveInRight .5s ease-in-out;
     }
 
     svg {
         cursor: pointer;
         position: relative;
         margin-top: 5px;
-        animation: moveInRight .5s ease-in-out;
     }
 `
 
@@ -71,51 +38,150 @@ const LaunchingForm = styled.form`
     display: flex;
     width: 100%;
     flex-direction: column;
-    
-    button{
+    align-items: center;
+
+    input{
         width: 100%;
-        cursor: pointer;
         align-self: center;
         height: 58px;
-        background: ${ ( { theme: {colors} } ) => colors.primary };
+        background: ${({ theme: { colors } } ) => colors.secondary};
         border-radius: 5px;
-        color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
+        margin-bottom: 13px;
         font-size: 20px;
         line-height: 23px;
-        margin-bottom: 18px;
-        text-align: center;
-        animation: moveInRight .5s ease-in-out;
-        transition: all .15s ease-in-out;
-        &:hover{
-        transform: translateY(-3px);
-        box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.3);
+        color: ${({ theme: { colors } } ) => colors.inputs};
+        padding: 15px;
+
+        ::placeholder{
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px;
+            line-height: 23px;
+            opacity: 0.6;
+            color: ${({ theme: { colors } } ) => colors.inputs};
         }
-        &:active{
-            transform: translateY(-1px);
-            box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+    }
+    
+    .group{
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 80%;
+        max-width: 400px;
+        margin-top: 20px;
+    }
+
+    .radio-group{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .radio-label{
+        font-size: 18px;
+        color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        width: 100%;
+    }
+
+    .radio-input{
+        opacity: 0;
+    }
+
+    .radio-button{
+        height: 25px;
+        position: relative;
+        width: 25px;
+        border-radius: 50%;
+        margin-right: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 3.5px solid ${({ theme: { colors } } ) => colors.secondaryAdaptable};
+
+        &::after{
+            content: "";
+            height: 13px;
+            width: 13px;
+            border-radius: 50%;
+            background-color: ${({ theme: { colors } } ) => colors.secondaryAdaptable};
+            opacity: 0;
         }
+    }
+
+    .radio-input:checked ~ .radio-label .radio-button::after{
+        opacity: 1;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        width: min(80%, 400px);
+    }
+
+    .edit {
+        width: 120px;
+        background: #fff;
+    }
+
+    .delete {
+        width: 120px;
+        background: ${({ theme: { colors } } ) => colors.quarternary};
+        color: white;
     }
 `
 
-const ErrorMessage = styled.p`
+const SeeMore = styled.button`
     font-family: Raleway;
+    position: relative;
+    font-size: 19px;
+    margin: 25px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 42px;
+    border-radius: 25px;
+    color: #333;
     align-self: center;
-    font-size: 15px;
-    line-height: 18px;
-    margin-bottom: 13px;
-    color: crimson;
-    font-weight: 700;
-    animation: moveInRight .5s ease-in-out;
+    transition: all .4s;
+    cursor: pointer; 
+
+    &::after{
+        content: "";
+        z-index: -1;
+        background: inherit;
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 25px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all .4s;
+    }
+
+    &:hover{
+        transform: translateY(-3px);
+        &::after{
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0;
+        }
+    }
+    
+    &:active{
+        transform: translateY(-0.1rem);
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0, .2);
+    }
 `
-
-
-
 
 const IncomesExpenses = {
     LaunchingHeader,
     LaunchingContainer,
     LaunchingForm,
-    ErrorMessage
+    SeeMore,
 }
 
 export default IncomesExpenses

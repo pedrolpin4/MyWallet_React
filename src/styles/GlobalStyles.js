@@ -21,6 +21,41 @@ const GlobalStyles = createGlobalStyle`
         color: inherit;
     }
 
+    @keyframes moveInRight{
+        0%{
+            opacity: 0;
+            transform: translateX(300px);
+        }
+
+        100%{
+            opacity: 1;
+            transform: translate(0);
+        }
+    }
+
+    @keyframes moveInTop{
+        0%{
+            opacity: 0;
+            transform: translateY(-700px);
+        }
+
+        100%{
+            opacity: 1;
+            transform: translate(0);
+        }
+    }
+
+    @keyframes moveInBottom{
+        0%{
+            opacity: 0;
+            transform: translateY(200px);
+        }
+
+        100%{
+            opacity: 1;
+            transform: translate(0);
+        }
+    }
 
     /*reset css*/ 
     html,

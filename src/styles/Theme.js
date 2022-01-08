@@ -17,7 +17,7 @@ const dark = {
     colors: {
         primary: "#333",
         primaryDark: "#000",
-        secondary: "#333",
+        secondary: "#222",
         secondaryAdaptable: "#fff",
         secondaryDark: "#bbb",
         terciary: "#02FF09",
