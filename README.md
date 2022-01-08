@@ -38,7 +38,7 @@ Do you like registering your incomes and expenses in an old notebook? Well, I do
 
 ## What comes next?
 
-- On the next versions you'll be to edit and delete your records;
+- On the next versions you'll be able to edit and delete your records;
 
 ## Tecnologies I Used
 
