@@ -15,6 +15,7 @@ import { BsGraphDown, BsGraphUp } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import categoriesServices from "../service/categories";
 import Loading from "../assets/Loading";
+import { toast } from "react-toastify";
 
 const DashBoard = ({setThemeType, themeType}) => {
     const history = useHistory();
@@ -24,7 +25,6 @@ const DashBoard = ({setThemeType, themeType}) => {
     const [incomeCategories, setIncomeCategories] = useState([]);
     const [expenseCategories, setExpenseCategories] = useState([])
     const [transactions, setTransactions] = useState([]);
-    const [errorMessage, setErrorMessage] = useState("");
     const [ visibility, setVisibility ] = useState(false)
     const [sidebar, setSidebar] = useState(false);
 
@@ -69,7 +69,7 @@ const DashBoard = ({setThemeType, themeType}) => {
         }
 
         setIsLoading(false)
-        setErrorMessage(result.message);
+        toast.error(result.message);
         return;
     };
 
@@ -81,7 +81,7 @@ const DashBoard = ({setThemeType, themeType}) => {
             return;
         }
 
-        setErrorMessage(result.message);
+        toast.error(result.message);
         return;
     }
 
@@ -302,9 +302,7 @@ const DashBoard = ({setThemeType, themeType}) => {
                         <SeeMore onClick={() => history.push('/cash-flow')}>See more</SeeMore>
                     </WhiteBox> 
                     </> :
-                    <NoTransactionsMessage>
-                        {errorMessage}
-                    </NoTransactionsMessage>
+                    ''
                 }
             </div> // effect
         }
@@ -344,15 +342,6 @@ const WhiteBox = styled.div`
     justify-content: ${props => props.hasTransactions ? "flex-start" : "center"};
     align-items:${props => props.hasTransactions ? "flex-start" : "center"} ;
     border-radius: 5px;
-`
-
-const NoTransactionsMessage = styled.h2`
-    width: 250px;
-    font-weight: normal;
-    font-size: 20px;
-    line-height: 23px;
-    text-align: center;
-    color: ${({ theme: { colors } } ) => colors.secondaryDark};
 `
 
 const TransactionsContainer = styled.div`
