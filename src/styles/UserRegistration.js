@@ -23,7 +23,7 @@ const RegistrationContainer = styled.div`
 
 const RegistrationForm = styled.form`
     display: flex;
-    width: 100%;
+    width: min(100%, 700px);
     flex-direction: column;
     
     input{
